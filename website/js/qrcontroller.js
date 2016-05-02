@@ -20,8 +20,48 @@
  * Controller for the qr generator, using AngularJS.
  */
 
-//Directive that allows to set focus with an attribute with name "focus" when set to true
-var quirliApp = angular.module('qr', []);
+var qrApp = angular.module('qr', []);
 
 function qrController($scope, $location) {
+    
+    globalScope = $scope; //TODO to give easy access, but later rework to fit the angular style
+    
+    $scope.QrText = "";
+    $scope.EccLevel = 1;
+    $scope.QrSizeDivider = 2; //2 is 50%
+
+    //preload this scope from the url query when available
+    //$scope.location = $location;
+    parseQueryParameter($scope);
+    
+    //If available, readily generate the QR code 
+    //doqr();
+}
+
+//parses the query parameter and preloads the model with it's data
+function parseQueryParameter($scope) {
+    //TODO later use the $location from the scope to get the url, to comply with angular style
+    var url = window.location.href;
+
+    //Load track from parameters		
+    var qrText = decodeURIComponent(gup(url, 'text'));
+    if (qrText) { //there is any?
+        $scope.QrText = qrText;
+    }
+}
+
+//---Helpers
+
+//Parses the current URL and returns the value for the specified parameter specified.
+//It does this using javascript's built in regular expressions.
+//Taken from http://www.netlobo.com/url_query_string_javascript.html 
+function gup(url, name) {
+    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+    var regexS = "[\\?&]" + name + "=([^&#]*)";
+    var regex = new RegExp(regexS);
+    var results = regex.exec(url);
+    if (results == null)
+        return "";
+    else
+        return results[1];
 }

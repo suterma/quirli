@@ -25,6 +25,16 @@
 //visually initialize the page, including tooltips
 $(document).ready(function () {
     $("#errordisplay").hide(); //to signal working javascript to the user		
-    $("[rel=tooltip]").tooltip();
+    $("[rel=tooltip]").tooltip();     
+    
+    //Specially handle the enter key on the url entry field, to actually change the model on enter key
+    $("#sourceurl").keyup(function (event) {
+        if (event.keyCode == 13) {
+            $("#sourceurl").blur();
+        }
+    });     
+    
+    setupqr();
+    //loads the eventual existing text into a new qr code
+    doqr();
 });
-

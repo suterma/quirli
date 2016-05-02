@@ -60,24 +60,14 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png"> -->
-    
-    <!-- Loading from own server to avoid dependency on other resources. This also simplifies offline usage-->
-    <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="angularjs/1.0.5/angular.min.js"></script>
-
-	<!-- Load the qr angular controller.-->
-	<script src="js/qrcontroller.js"></script>
-
-    <!-- Load the presenter code for this view -->
-    <script src="js/qrpresenter.js"></script> 
-    
+       
     <!--The styles specifically for the QR Codes.-->
     <style type="text/css">
         div#qrdiv {width:200px; height:200px}
     </style>       
 </head>	
 
-<body onload="setupqr()">
+<body>
     		<div class="navbar navbar-inverse navbar-fixed-top">
 		      <div class="navbar-inner">
 		        <div class="container">
@@ -107,18 +97,23 @@
  		    <div> <!-- The core UI -->
                <form name="qrinp">
 				   <div class="form-horizontal">
-				    <input ng-model="MediaUrl" class="form-control input-xxlarge" type="text" id="sourceurl" autocomplete="on" placeholder="Enter an URL" name="sourceurl"/> 
-	                <i class="icon-question-sign" rel="tooltip" title="Define the URL to generate a QR code for."></i>
-                    <select class="form-control input-medium" name="ECC">
+				    <input ng-model="QrText" class="form-control input-xxlarge" type="text" id="sourceurl" autocomplete="on" placeholder="Enter an URL or text" name="sourceurl" onblur="doqr();"/> 
+	                <i class="icon-question-sign" rel="tooltip" title="Define the URL or text to generate a QR code for."></i>
+                    <select ng-model="EccLevel" class="form-control input-medium" name="ECC" onchange="doqr();">
                         <option value="1" selected>ECC Level 1</option>
                         <option value="2" >ECC Level 2</option>
                         <option value="3" >ECC Level 3</option>
                         <option value="4" >ECC Level 4</option>
                     </select>
 	                <i class="icon-question-sign" rel="tooltip" title="The level of the redundancy for the error correction. A higher level means more redundancy and more robustness, but also a more complex QR code."></i>
-                    <button class="btn btn-inverse" value="Go" onclick="doqr()">
+                    <select ng-model="QrSizeDivider" class="form-control input-medium" name="QrSizeDivider" onchange="setupqr();doqr();">
+                        <option value="5" >Small size</option>
+                        <option value="2" selected" >Medium size</option>
+                        <option value="1" >Large Size</option>
+                    </select>
+                    <!--<button class="btn btn-inverse" value="Go" onclick="doqr()">
                             <i class="icon-play icon-white" rel="tooltip" title="" data-original-title="Generates the QR code using the URL and the ECC Level."></i>                      
-                    </button>
+                    </button>-->
                 </div>
                  </form>
                  <div id="qrdiv" style="background:white; width:360px; height:360px">
@@ -868,6 +863,11 @@ function setupqr(){
     var maxheight = window.innerHeight-100;
     var maxwidth = contentcontainer.offsetWidth;
     qrcodedimension = Math.min(maxheight, maxwidth);
+    
+    //Apply size setting
+    d = document;
+    qrcodedimension = qrcodedimension / d.qrinp.QrSizeDivider.value;
+    
     qrd.style.width = qrcodedimension + "px";
     qrd.style.height = qrcodedimension + "px";
 
@@ -886,7 +886,7 @@ function doqr() {
     
     var i,j;
     // marcel@codeministry.ch: By empirics, the px value should be larger than the qrcodedimention to make a good fit
-    px = qrcodedimension + 64;
+    px = qrcodedimension;// + 64;
     px /= width+10;
 
     px=Math.round(px - 0.5);
@@ -902,7 +902,19 @@ function doqr() {
 </script>
 		<!-- Le javascript
 	    ================================================== -->
+    <!-- Loading from own server to avoid dependency on other resources. This also simplifies offline usage-->
+    <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="angularjs/1.0.5/angular.min.js"></script>
+
 	    <!-- Placed at the end of the document so the pages load faster -->
 	    <script src="bootstrap/js/bootstrap.min.js"></script>	
+        
+
+	<!-- Load the qr angular controller.-->
+	<script src="js/qrcontroller.js"></script>
+
+    <!-- Load the presenter code for this view -->
+    <script src="js/qrpresenter.js"></script> 
+        
 	</body>	
 </html>
