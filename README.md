@@ -1,4 +1,4 @@
-# quirli
+# quirli - replay with ease
 quirli is a free media player for replay and rehearsal. It's main feature is fast navigation to predefined cue points in the media.
 
 ![A visual overview over how quirli works.](http://quir.li/img/HowItWorks.png "A visual overview over how quirli works.")
@@ -20,4 +20,5 @@ Supported media types are _mp3_, _wav_, _mp4_, _webm_, _ogv_, _ogg_ and _youtube
 ## Who can use it?
 quirli is primarily aimed at musicians, singers and choir conductors who want to rehearse with playback music. You can however use it to provide access to specific parts of any media file regardless of it's content. 
 
-Find out more on the [project website](http://quir.li).
+##[Get started!](http://quir.li/player.html)
+Or find out more on the [project website](http://quir.li).
