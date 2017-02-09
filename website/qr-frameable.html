@@ -80,30 +80,28 @@
          <div> <!-- The core UI --> 
                <form name="qrinp" class="form-inline"> 
                    <fieldset> 
-            <input ng-model="QrText" class="form-control input-xxlarge" type="text" id="sourceurl" autocomplete="on" placeholder="Enter an URL or text" name="sourceurl" onpaste="doqr();" oninput="doqr();" />  
-    
-                    <!-- //TODO Alignment of the canvas to the center of the screen is not possible this way. --> 
-                    <div id="qralignmentwrapper" style="width:100%; justify-content: center; align-items: center;"> 
-                 <div id="qrdiv" style="background:white; width:360px; height:360px;"> 
-                    <canvas id="qrcanv">No Canvas Support? 
-                </div> 
-                </div> 
-    
+                    <input ng-model="QrText" class="form-control input-xxlarge" type="text" id="sourceurl" autocomplete="on" placeholder="Enter an URL or text" name="sourceurl" onpaste="doqr();" oninput="doqr();" />  
                     <select ng-model="EccLevel" class="form-control input-medium" name="ECC" onchange="doqr();"> 
                         <option value="1" selected>Level L (dense)</option> 
                         <option value="2" >Level M</option> 
                         <option value="3" >Level Q</option> 
                         <option value="4" >Level H (rugged)</option> 
                     </select> 
+                    <!--With this embeddable version the screen height is used fully by default-->
                     <select ng-model="QrSizeDivider" class="form-control input-medium" name="QrSizeDivider" onchange="setupqr();doqr();"> 
-                        <option value="5" >Small size</option> 
-                        <option value="2" selected" >Medium size</option> 
-                        <option value="1" >Large Size</option> 
+                        <option value="5">Quarter size</option> 
+                        <option value="2">Half size</option> 
+                        <option value="1">Full size</option> 
                     </select> 
-              
+                    <!-- //TODO Alignment of the canvas to the center of the screen is not possible this way. --> 
+                    <div id="qralignmentwrapper" style="width:100%; justify-content: center; align-items: center;"> 
+                        <div id="qrdiv" style="background:white; width:360px; height:360px;"> 
+                            <canvas id="qrcanv">No Canvas Support? 
+                        </div> 
+                    </div> 
+             
                    </fieldset> 
-                 </form> 
- 
+                 </form>
  
          <div> <!-- The core UI --> 
  
@@ -819,11 +817,12 @@ var qrcodedimension, qrc;
 function setupqr(){ 
     qrd = document.getElementById("qrdiv"); 
      
-    //the dimension of the QR code must be below screen height (plus some margin) and content container width to be fully visible at once in the browser. 
+    //With this embeddable version the screen height is used fully minus some margin for the inputs 
     var contentcontainer = document.getElementById("contentcontainer"); 
-    var maxheight = window.innerHeight-100; 
+    var maxheight = window.innerHeight-30; // Assumed input height 
     var maxwidth = contentcontainer.offsetWidth; 
     qrcodedimension = Math.min(maxheight, maxwidth); 
+    qrcodedimension = Math.max(qrcodedimension, 60); //at least twice as large as the input elements
      
     //Apply size setting 
     d = document; 
@@ -878,5 +877,4 @@ function doqr() {
     <script src="js/qrpresenter.js"></script>  
          
   </body>   
-</html> 
-Added framable, simple version of the qr encoder
+</html>

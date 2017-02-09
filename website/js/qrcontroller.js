@@ -28,7 +28,7 @@ function qrController($scope, $location) {
     
     $scope.QrText = "";
     $scope.EccLevel = 1;
-    $scope.QrSizeDivider = 2; //2 is 50%
+    $scope.QrSizeDivider = 1; //1 is 100%
 
     //preload this scope from the url query when available
     //$scope.location = $location;
