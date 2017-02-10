@@ -27,29 +27,31 @@
 -->
 <html ng-app="qr" lang="en">
 <head>
-    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
-	<meta charset="UTF-8" />
-	<meta http-equiv="content-language" content="en" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 	<title>quirli - replay and share media with cues, featuring QR codes.</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+	<meta http-equiv="content-language" content="en" />
 	<meta name="Copyright" content="GPLv3 licensed by codeministry.ch" />
 	<meta name="dc.language" content="en" />
 	<meta name="geo.country" content="CH" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> <!-- To force IE9 to use the currently latest rendering engine -->
     <meta name="description" content="Media player for replay and rehearsal with cues, featuring QR codes.">
     <meta name="author" content="codeministry.ch">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le styles -->
     <!-- Note: Bootstrap is not officially hosted on a CDN, so we host that ourselves for now-->
     <!-- use a customized bootstrap version for quirli, prepending parts.-->
-    <link href="bootstrap/css/quirli-mods-pre.css" rel="stylesheet">
+    <!-- <link href="bootstrap/css/quirli-mods-pre.css" rel="stylesheet"> -->
     <!-- use prepending custom modifications for quirli. To make the body move-down for the top navbar working, this css must get loaded first.-->
     <link href="bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <!-- use a Bootstrap theme.-->
     <link href="bootstrap-3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
     <!-- use a customized bootstrap version for quirli, postpending parts.-->
-    <link href="bootstrap/css/quirli-mods.css" rel="stylesheet">
-
+    <!-- <link href="bootstrap/css/quirli-mods.css" rel="stylesheet"> -->	
+    <!-- use a customized bootstrap template for quirli.-->
+    <link href="bootstrap-3.3.7/css/quirli-template.css" rel="stylesheet">
     <!-- Le fav and touch icons -->
     <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
@@ -67,63 +69,59 @@
 </head>	
 
 <body>
-    		<div class="navbar navbar-inverse navbar-fixed-top">
-		      <div class="navbar-inner">
-		        <div class="container">
-		          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-		            <span class="icon-bar"></span>
-		            <span class="icon-bar"></span>
-		            <span class="icon-bar"></span>
-		          </a>
-		          <a class="brand" href="index.html">quirli <img src = "img/quirli_app_icon_16x16.png"/></a>
-		          <div class="nav-collapse collapse">
-		            <ul class="nav">
-		              <li><a href="index.html">About</a></li>
-		            </ul>
-		          </div><!--/.nav-collapse -->
-		    	</div>
-			</div>
-		</div>
-
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">quirli <img src="img/quirli_app_icon_16x16.png"/></a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+		    <li><a href="index.html">About</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+	
 		<div id="contentcontainer" class="container" ng-controller="qrController">
 	        <!--Error notification-->
 		    <div id="errordisplay">
-			    <div class="alert alert-error">
-			    <h4 class="alert-heading" id="errortext">Please enable JavaScript to use quirli.</h4>
+			    <div class="alert alert-danger">
+			    <div id="errortext">Please enable JavaScript to use quirli.</div>
 			    </div>
 		    </div>
 
  		    <div> <!-- The core UI -->
-               <form name="qrinp">
-				   <div class="form-horizontal">
-				    <input ng-model="QrText" class="form-control input-xxlarge" type="text" id="sourceurl" autocomplete="on" placeholder="Enter an URL or text" name="sourceurl" onpaste="doqr();" oninput="doqr();" title="Define the URL or text to generate a QR code for."/> 
-                    <select ng-model="EccLevel" class="form-control input-medium" name="ECC" onchange="doqr();" title="The level of the redundancy for the error correction. A higher level means more redundancy and more robustness, but also a more complex QR code.">
-                        <option value="1" >Level L (dense)</option> 
-                        <option value="2" >Level M</option> 
-                        <option value="3" >Level Q</option> 
-                        <option value="4" >Level H (rugged)</option> 
+			<h1>Generate QR code</h1>
+               <form class="form-inline" name="qrinp">
+				  <div class="form-group">
+                    <label for="sourceurl" class="control-label">Text</label>
+					<input ng-model="QrText" class="form-control" type="text" id="sourceurl" autocomplete="on" placeholder="Enter an URL or text" name="sourceurl" onpaste="doqr();" oninput="doqr();" title="Define the URL or text to generate a QR code for."/> 
+				  </div>
+				  <div class="form-group">	
+                    <label for="eccLevelSelector" class="control-label">Level</label>				  
+                    <select ng-model="EccLevel" id="eccLevelSelector" class="form-control" name="ECC" onchange="doqr();" title="The level of the redundancy for the error correction. A higher level means more redundancy and more robustness, but also a more complex QR code.">
+                        <option value="1" >L (dense)</option> 
+                        <option value="2" >M</option> 
+                        <option value="3" >Q</option> 
+                        <option value="4" >H (rugged)</option> 
                     </select>
-                    <select ng-model="QrSizeDivider" class="form-control input-medium" name="QrSizeDivider" onchange="setupqr();doqr();" title="The display size of the QR code. Large means full window size.">
-                        <option value="4" >Small size</option>
-                        <option value="2" >Medium size</option>
-                        <option value="1" >Large Size</option>
+                    <label for="qrSizeSelector" class="control-label">Size</label>				  
+                    <select ng-model="QrSizeDivider" id="qrSizeSelector" class="form-control" name="QrSizeDivider" onchange="setupqr();doqr();" title="The display size of the QR code. Large means full window size.">
+                        <option value="4" >Small</option>
+                        <option value="2" >Medium</option>
+                        <option value="1" >Large</option>
                     </select>
-                </div>
-                 </form>
-                 <div id="qrdiv" style="background:white; width:360px; height:360px">
-<canvas id="qrcanv">No Canvas Support?
-    </div>
-  
-<!--<div id="qrdiv" style="background:lightgray; position:absolute; width:360px; height:360px">
-    Javascript QR Encoder, Copyright 2010, tz@execpc.com, released under GPLv3
-  <form name="qrinp">
-    <input type="button" value="Go" onclick="doqr()"/>
-    ECC Level (1-4)
-    <input type="numeric" name="ECC" value="1" size="1"><br>
-    Text:<textarea name="qrinput" size=2953>Hello World!</textarea><br>
-  </form>
-    <canvas id="qrcanv"}>No Canvas Support?
-</div>-->
+                  </div>
+                </form>
+                <div id="qrdiv" style="background:white; width:360px; height:360px">
+					<canvas id="qrcanv">No Canvas Support?
+				</div>
 
  		    <div> <!-- The core UI -->
 
@@ -894,21 +892,21 @@ function doqr() {
                 qrc.fillRect(px*(4+i),px*(4+j),px,px)
 }
 </script>
-		<!-- Le javascript
-	    ================================================== -->
-    <!-- Loading from own server to avoid dependency on other resources. This also simplifies offline usage-->
-    <script type="text/javascript" src="jquery/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="angularjs/1.0.5/angular.min.js"></script>
+	<!-- Le javascript
+	================================================== -->
+	<!-- Loading from own server to avoid dependency on other resources. This also simplifies offline usage-->
+	<script type="text/javascript" src="jquery/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="angularjs/1.0.5/angular.min.js"></script>
 
-	    <!-- Placed at the end of the document so the pages load faster -->
-	    <script src="bootstrap-3.3.7/js/bootstrap.min.js"></script>	
-        
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="bootstrap-3.3.7/js/bootstrap.min.js"></script>	
+
 
 	<!-- Load the qr angular controller.-->
 	<script src="js/qrcontroller.js"></script>
 
-    <!-- Load the presenter code for this view -->
-    <script src="js/qrpresenter.js"></script> 
-        
+	<!-- Load the presenter code for this view -->
+	<script src="js/qrpresenter.js"></script> 
+
 	</body>	
 </html>
