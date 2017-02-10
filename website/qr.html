@@ -40,16 +40,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le styles -->
-    <!-- Note: Twitter Bootstrap is not officially hosted on a CDN, so we host that ourselves for now-->
+    <!-- Note: Bootstrap is not officially hosted on a CDN, so we host that ourselves for now-->
     <!-- use a customized bootstrap version for quirli, prepending parts.-->
     <link href="bootstrap/css/quirli-mods-pre.css" rel="stylesheet">
     <!-- use prepending custom modifications for quirli. To make the body move-down for the top navbar working, this css must get loaded first.-->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- to allow usage of bootstrap responsive features-->
-    <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- use a Bootstrap theme.-->
+    <link href="bootstrap-3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
     <!-- use a customized bootstrap version for quirli, postpending parts.-->
     <link href="bootstrap/css/quirli-mods.css" rel="stylesheet">
-
 
     <!-- Le fav and touch icons -->
     <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
@@ -97,23 +96,18 @@
  		    <div> <!-- The core UI -->
                <form name="qrinp">
 				   <div class="form-horizontal">
-				    <input ng-model="QrText" class="form-control input-xxlarge" type="text" id="sourceurl" autocomplete="on" placeholder="Enter an URL or text" name="sourceurl" onblur="doqr();"/> 
-	                <i class="icon-question-sign" rel="tooltip" title="Define the URL or text to generate a QR code for."></i>
-                    <select ng-model="EccLevel" class="form-control input-medium" name="ECC" onchange="doqr();">
-                        <option value="1" selected>ECC Level 1</option>
-                        <option value="2" >ECC Level 2</option>
-                        <option value="3" >ECC Level 3</option>
-                        <option value="4" >ECC Level 4</option>
+				    <input ng-model="QrText" class="form-control input-xxlarge" type="text" id="sourceurl" autocomplete="on" placeholder="Enter an URL or text" name="sourceurl" onpaste="doqr();" oninput="doqr();" title="Define the URL or text to generate a QR code for."/> 
+                    <select ng-model="EccLevel" class="form-control input-medium" name="ECC" onchange="doqr();" title="The level of the redundancy for the error correction. A higher level means more redundancy and more robustness, but also a more complex QR code.">
+                        <option value="1" >Level L (dense)</option> 
+                        <option value="2" >Level M</option> 
+                        <option value="3" >Level Q</option> 
+                        <option value="4" >Level H (rugged)</option> 
                     </select>
-	                <i class="icon-question-sign" rel="tooltip" title="The level of the redundancy for the error correction. A higher level means more redundancy and more robustness, but also a more complex QR code."></i>
-                    <select ng-model="QrSizeDivider" class="form-control input-medium" name="QrSizeDivider" onchange="setupqr();doqr();">
-                        <option value="5" >Small size</option>
-                        <option value="2" selected" >Medium size</option>
+                    <select ng-model="QrSizeDivider" class="form-control input-medium" name="QrSizeDivider" onchange="setupqr();doqr();" title="The display size of the QR code. Large means full window size.">
+                        <option value="4" >Small size</option>
+                        <option value="2" >Medium size</option>
                         <option value="1" >Large Size</option>
                     </select>
-                    <!--<button class="btn btn-inverse" value="Go" onclick="doqr()">
-                            <i class="icon-play icon-white" rel="tooltip" title="" data-original-title="Generates the QR code using the URL and the ECC Level."></i>                      
-                    </button>-->
                 </div>
                  </form>
                  <div id="qrdiv" style="background:white; width:360px; height:360px">
@@ -903,11 +897,11 @@ function doqr() {
 		<!-- Le javascript
 	    ================================================== -->
     <!-- Loading from own server to avoid dependency on other resources. This also simplifies offline usage-->
-    <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="jquery/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="angularjs/1.0.5/angular.min.js"></script>
 
 	    <!-- Placed at the end of the document so the pages load faster -->
-	    <script src="bootstrap/js/bootstrap.min.js"></script>	
+	    <script src="bootstrap-3.3.7/js/bootstrap.min.js"></script>	
         
 
 	<!-- Load the qr angular controller.-->
