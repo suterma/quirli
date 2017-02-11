@@ -5,8 +5,8 @@
     - Added support for Bootstrap styles
     - Added support for AngularJS
     - Changed size calculation to support non-fullscreen size for display at once.
-    
-    See the original source at https://code.google.com/archive/p/jsqrencode/downloads 
+
+    See the original source at https://code.google.com/archive/p/jsqrencode/downloads
     -->
 <!--
     quirli, replay with ease.
@@ -26,17 +26,18 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <html ng-app="qr" lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-	<title>quirli - replay and share media with cues, featuring QR codes.</title>
+    <title>quirli - replay and share media with cues, featuring QR codes.</title>
     <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
-	<meta http-equiv="content-language" content="en" />
-	<meta name="Copyright" content="GPLv3 licensed by codeministry.ch" />
-	<meta name="dc.language" content="en" />
-	<meta name="geo.country" content="CH" />
+    <meta http-equiv="content-language" content="en" />
+    <meta name="Copyright" content="GPLv3 licensed by codeministry.ch" />
+    <meta name="dc.language" content="en" />
+    <meta name="geo.country" content="CH" />
     <meta name="description" content="Media player for replay and rehearsal with cues, featuring QR codes.">
     <meta name="author" content="codeministry.ch">
 
@@ -49,78 +50,83 @@
     <!-- use a Bootstrap theme.-->
     <link href="bootstrap-3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
     <!-- use a customized bootstrap version for quirli, postpending parts.-->
-    <!-- <link href="bootstrap/css/quirli-mods.css" rel="stylesheet"> -->	
+    <!-- <link href="bootstrap/css/quirli-mods.css" rel="stylesheet"> -->
     <!-- use a customized bootstrap template for quirli.-->
     <link href="bootstrap-3.3.7/css/quirli-template.css" rel="stylesheet">
     <!-- Le fav and touch icons -->
     <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
-    <!-- 
+    <!--
     Because there is no official apple support right now, we omit these apple specific things
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png"> -->
-       
+
     <!--The styles specifically for the QR Codes.-->
     <style type="text/css">
-        div#qrdiv {width:200px; height:200px}
-    </style>       
-</head>	
+        div#qrdiv {
+            width: 200px;
+            height: 200px
+        }
+    </style>
+</head>
 
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.html">quirli <img src="img/quirli_app_icon_16x16.png"/></a>
+                <a class="navbar-brand" href="index.html">quirli <img src="img/quirli_app_icon_16x16.png"/></a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="index.html">About</a></li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
         </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-		    <li><a href="index.html">About</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
     </nav>
-	
-		<div id="contentcontainer" class="container" ng-controller="qrController">
-	        <!--Error notification-->
-		    <div id="errordisplay">
-			    <div class="alert alert-danger">
-			    <div id="errortext">Please enable JavaScript to use quirli.</div>
-			    </div>
-		    </div>
 
- 		    <div> <!-- The core UI -->
-			<h1>Generate QR code</h1>
-               <form class="form-inline" name="qrinp">
-				  <div class="form-group">
+    <div id="contentcontainer" class="container" ng-controller="qrController">
+        <!--Error notification-->
+        <div id="errordisplay">
+            <div class="alert alert-danger">
+                <div id="errortext">Please enable JavaScript to use quirli.</div>
+            </div>
+        </div>
+
+        <div>
+            <!-- The core UI -->
+            <h1>Generate QR code</h1>
+            <form class="form-inline" name="qrinp">
+                <div class="form-group">
                     <label for="sourceurl" class="control-label">Text</label>
-					<input ng-model="QrText" class="form-control" type="text" id="sourceurl" autocomplete="on" placeholder="Enter an URL or text" name="sourceurl" onpaste="doqr();" oninput="doqr();" title="Define the URL or text to generate a QR code for."/> 
-				  </div>
-				  <div class="form-group">	
-                    <label for="eccLevelSelector" class="control-label">Level</label>				  
+                    <input ng-model="QrText" class="form-control" type="text" id="sourceurl" autocomplete="on" placeholder="Enter an URL or text" name="sourceurl" onpaste="doqr();" oninput="doqr();" title="Define the URL or text to generate a QR code for." />
+                </div>
+                <div class="form-group">
+                    <label for="eccLevelSelector" class="control-label">Level</label>
                     <select ng-model="EccLevel" id="eccLevelSelector" class="form-control" name="ECC" onchange="doqr();" title="The level of the redundancy for the error correction. A higher level means more redundancy and more robustness, but also a more complex QR code.">
-                        <option value="1" >L (dense)</option> 
-                        <option value="2" >M</option> 
-                        <option value="3" >Q</option> 
-                        <option value="4" >H (rugged)</option> 
+                        <option value="1" >L (dense)</option>
+                        <option value="2" >M</option>
+                        <option value="3" >Q</option>
+                        <option value="4" >H (rugged)</option>
                     </select>
-                    <label for="qrSizeSelector" class="control-label">Size</label>				  
+                    <label for="qrSizeSelector" class="control-label">Size</label>
                     <select ng-model="QrSizeDivider" id="qrSizeSelector" class="form-control" name="QrSizeDivider" onchange="setupqr();doqr();" title="The display size of the QR code. Large means full window size.">
                         <option value="4" >Small</option>
                         <option value="2" >Medium</option>
                         <option value="1" >Large</option>
                     </select>
-                  </div>
-                </form>
-                <div id="qrdiv" style="background:white; width:360px; height:360px">
-					<canvas id="qrcanv">No Canvas Support?
+                </div>
+            </form>
+            <div id="qrdiv" style="background:white; width:360px; height:360px">
+                <canvas id="qrcanv">No Canvas Support?
 				</div>
 
  		    <div> <!-- The core UI -->
@@ -254,7 +260,7 @@ gexp = [
 
 // Working buffers:
 // data input and ecc append, image working buffer, fixed part of image, run lengths for badness
-var strinbuf=[], eccbuf=[], qrframe=[], framask=[], rlens=[]; 
+var strinbuf=[], eccbuf=[], qrframe=[], framask=[], rlens=[];
 // Control values - width is based on version, last 4 are from table.
 var version, width, neccblk1, neccblk2, datablkw, eccblkwid;
 var ecclevel = 1;
@@ -442,7 +448,7 @@ function  applymask(m)
 // Badness coefficients.
 var N1 = 3, N2 = 3, N3 = 40, N4 = 10;
 
-// Using the table of the length of each run, calculate the amount of bad image 
+// Using the table of the length of each run, calculate the amount of bad image
 // - long runs or those that look like finders; called twice, once each for X and Y
 function badruns(length)
 {
@@ -849,23 +855,23 @@ function genframe(instring)
 var qrcodedimension, qrc;
 function setupqr(){
     qrd = document.getElementById("qrdiv");
-    
+
     //the dimension of the QR code must be below screen height (plus some margin) and content container width to be fully visible at once in the browser.
     var contentcontainer = document.getElementById("contentcontainer");
     var maxheight = window.innerHeight-100;
     var maxwidth = contentcontainer.offsetWidth;
     qrcodedimension = Math.min(maxheight, maxwidth);
-    
+
     //Apply size setting
     d = document;
     qrcodedimension = qrcodedimension / d.qrinp.QrSizeDivider.value;
-    
+
     qrd.style.width = qrcodedimension + "px";
     qrd.style.height = qrcodedimension + "px";
 
     var elem = document.getElementById('qrcanv');
     qrc = elem.getContext('2d');
-    
+
     qrc.canvas.width = qrcodedimension;
     qrc.canvas.height = qrcodedimension;
 }
@@ -875,7 +881,7 @@ function doqr() {
     ecclevel = d.qrinp.ECC.value;
     qf = genframe(d.qrinp.sourceurl.value);
     qrc.lineWidth=1;
-    
+
     var i,j;
     // marcel@codeministry.ch: By empirics, the px value should be larger than the qrcodedimention to make a good fit
     px = qrcodedimension;// + 64;
@@ -899,14 +905,13 @@ function doqr() {
 	<script type="text/javascript" src="angularjs/1.0.5/angular.min.js"></script>
 
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="bootstrap-3.3.7/js/bootstrap.min.js"></script>	
-
+	<script src="bootstrap-3.3.7/js/bootstrap.min.js"></script>
 
 	<!-- Load the qr angular controller.-->
 	<script src="js/qrcontroller.js"></script>
 
 	<!-- Load the presenter code for this view -->
-	<script src="js/qrpresenter.js"></script> 
+	<script src="js/qrpresenter.js"></script>
 
-	</body>	
+	</body>
 </html>
