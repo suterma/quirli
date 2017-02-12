@@ -1,14 +1,5 @@
 <!DOCTYPE html>
 <!--
-    This Javascript QR Encoder is Copyright 2010, tz@execpc.com, released under GPLv3.
-    It has been slightly adapted to fit the quirli project in functionality and style
-    - Added support for Bootstrap styles
-    - Added support for AngularJS
-    - Changed size calculation to support non-fullscreen size for display at once.
-
-    See the original source at https://code.google.com/archive/p/jsqrencode/downloads
-    -->
-<!--
     quirli, replay with ease.
     Copyright (C) 2012 by marcel suter, marcel@codeministry.ch
 
@@ -25,6 +16,15 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
+<!--
+    The included Javascript QR Encoder is Copyright 2010, tz@execpc.com, released under GPLv3.
+    It has been slightly adapted to fit the quirli project in functionality and style
+    - Added support for Bootstrap styles
+    - Added support for AngularJS
+    - Changed size calculation to support non-fullscreen size for display at once.
+
+    See the original source at https://code.google.com/archive/p/jsqrencode/downloads
+    -->
 <html ng-app="qr" lang="en">
 
 <head>
@@ -43,14 +43,9 @@
 
     <!-- Le styles -->
     <!-- Note: Bootstrap is not officially hosted on a CDN, so we host that ourselves for now-->
-    <!-- use a customized bootstrap version for quirli, prepending parts.-->
-    <!-- <link href="bootstrap/css/quirli-mods-pre.css" rel="stylesheet"> -->
-    <!-- use prepending custom modifications for quirli. To make the body move-down for the top navbar working, this css must get loaded first.-->
     <link href="bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <!-- use a Bootstrap theme.-->
     <link href="bootstrap-3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
-    <!-- use a customized bootstrap version for quirli, postpending parts.-->
-    <!-- <link href="bootstrap/css/quirli-mods.css" rel="stylesheet"> -->
     <!-- use a customized bootstrap template for quirli.-->
     <link href="bootstrap-3.3.7/css/quirli-template.css" rel="stylesheet">
     <!-- Le fav and touch icons -->
@@ -63,18 +58,13 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png"> -->
 
-    <!--The styles specifically for the QR Codes.-->
+    <!--The styles specifically for the QR Codes.
     <style type="text/css">
         div#qrdiv {
             width: 200px;
             height: 200px
         }
-        /*TODO test show canvas*/
-        
-        canvas#qrcanv {
-            background-color: yellow;
-        }
-    </style>
+    </style>-->
 </head>
 
 <body>
@@ -862,15 +852,23 @@ var qrcodedimension, qrc;
 function setupqr(){
     qrd = document.getElementById("qrdiv");
 
-    //the dimension of the QR code must be below screen height (plus some margin) and content container width to be fully visible at once in the browser.
+    // change by marcel@codeministry.ch: the dimension of the QR code must
+    // be a little  below screen height (including some
+    // margin) and content container width to be fully visible at once in the
+    // browser, but it should not be smaller than some minimal size to provide
+    // legible resolution;
+    var qrcodeminimumdimension = 64;
+    var qrcodescreenheightmargin = 100;
     var contentcontainer = document.getElementById("contentcontainer");
-    var maxheight = window.innerHeight-100;
+    var maxheight = window.innerHeight-qrcodescreenheightmargin;
     var maxwidth = contentcontainer.offsetWidth;
     qrcodedimension = Math.min(maxheight, maxwidth);
 
     //Apply size setting
     d = document;
     qrcodedimension = qrcodedimension / d.qrinp.QrSizeDivider.value;
+    qrcodedimension = Math.max(qrcodeminimumdimension, qrcodedimension);
+
 
     qrd.style.width = qrcodedimension + "px";
     qrd.style.height = qrcodedimension + "px";
@@ -889,9 +887,10 @@ function doqr() {
     qrc.lineWidth=1;
 
     var i,j;
-    // marcel@codeministry.ch: By empirics, the px value should be larger than the qrcodedimention to make a good fit
-    px = qrcodedimension;// + 64;
-    px /= width+10;
+    // change by marcel@codeministry.ch: Using a square area of qrcodedimension
+    // for all cases. Changed px calculation to better use screen real estate.
+    px = qrcodedimension;
+    px /= width+7;
 
     px=Math.round(px - 0.5);
     qrc.clearRect(0,0,qrcodedimension,qrcodedimension);
