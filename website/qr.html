@@ -94,6 +94,27 @@
             <form class="form-inline" name="qrinp">
                 <div class="form-group">
                     <label for="sourceurl" class="control-label">Text</label>
+                    <style type="text/css">
+                        /* make the sourceurl text input as large as possible, on a standard container */
+
+                        @media (min-width: 768px) {
+                            input#sourceurl.form-control {
+                                min-width: 396px;
+                            }
+                        }
+
+                        @media (min-width: 992px) {
+                            input#sourceurl.form-control {
+                                min-width: 616px;
+                            }
+                        }
+
+                        @media (min-width: 1200px) {
+                            input#sourceurl.form-control {
+                                min-width: 816px;
+                            }
+                        }
+                    </style>
                     <input ng-model="QrText" class="form-control" type="text" id="sourceurl" autocomplete="on" placeholder="Enter an URL or text" name="sourceurl" onpaste="doqr();" oninput="doqr();" title="Define the URL or text to generate a QR code for." />
                 </div>
                 <div class="form-group">
@@ -112,7 +133,7 @@
                     </select>
                 </div>
             </form>
-            <div id="qrdiv" style="background:white; width:360px; height:360px">
+            <div id="qrdiv" class="center-block" style="background:white; width:360px; height:360px">
                 <canvas id="qrcanv">No Canvas Support?
 				</div>
 
