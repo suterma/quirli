@@ -31,8 +31,8 @@ function setViewStyle(style) {
 
 //visually initialize the page, including tooltips
 $(document).ready(function() {
-    $("#loadingdisplay").hide(); //to signal working javascript to the user
-    $("#coreui").show(); //to signal working javascript to the user		
+    $("#loaderdisplay").hide(); //to signal working javascript to the user
+    $("#coreui").show(); //to signal working javascript to the user
     $("[rel=tooltip]").tooltip();
     $("#playercontrols").hide(); //initially, there is no media to control for playing
     $("#progressdisplay").hide(); //document is ready now

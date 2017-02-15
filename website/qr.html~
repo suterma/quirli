@@ -82,7 +82,7 @@
     <div id="contentcontainer" class="container" ng-controller="qrController">
 
       <!--Loading notification. A modal dialog, without backdrop, that gets dismissed aftre document ready-->
-      <div id="loadingdisplay" class="modal fade bs-example-modal-sm in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; margin-top:50%;">
+      <div id="loadingdisplay" class="modal fade bs-example-modal-lg in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; margin-top:50%;">
           <div class="modal-dialog modal-sm" role="document">
 <p class="text-muted center-block"><img class="spinning" src="img/quirli_star_icon_16x16.png"/>Loading...</p>
           </div>

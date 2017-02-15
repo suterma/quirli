@@ -72,7 +72,7 @@
             </div>
             <!--/.nav-collapse -->
         </div>
-        </nav>
+        </na v>
 
         <div id="contentcontainer" class="container" ng-controller="qrController">
             <h1>Embedded QR code generator below.</h1>

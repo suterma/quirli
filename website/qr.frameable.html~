@@ -17,6 +17,11 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <!--
+    This qr-encoder, which is part of the quirli project, has been
+    specifically designed to be embeddable inside a webpage. It
+    therefore omits navigation, navs, menus headers and footers.
+-->
+<!--
     The included Javascript QR Encoder is Copyright 2010, tz@execpc.com, released under GPLv3.
     It has been slightly adapted to fit the quirli project in functionality and style
     - Added support for Bootstrap styles
@@ -46,8 +51,6 @@
     <link href="bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <!-- use a Bootstrap theme.-->
     <link href="bootstrap-3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
-    <!-- use a customized bootstrap template for quirli.-->
-    <link href="bootstrap-3.3.7/css/quirli-template.css" rel="stylesheet">
     <!-- Le fav and touch icons -->
     <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
@@ -60,29 +63,9 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-                <a class="navbar-brand" href="index.html">quirli <img src="img/quirli_app_icon_16x16.png"/></a>
-            </div>
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="index.html">About</a></li>
-                </ul>
-            </div>
-            <!--/.nav-collapse -->
-        </div>
-    </nav>
-    <div id="contentcontainer" class="container" ng-controller="qrController">
-
+    <div id="contentcontainer" class="container-fluid" ng-controller="qrController">
       <!--Loading notification. A modal dialog, without backdrop, that gets dismissed aftre document ready-->
-      <div id="loadingdisplay" class="modal fade bs-example-modal-sm in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; margin-top:50%;">
+      <div id="loadingdisplay" class="modal fade bs-example-modal-lg in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; margin-top:50%;">
           <div class="modal-dialog modal-sm" role="document">
 <p class="text-muted center-block"><img class="spinning" src="img/quirli_star_icon_16x16.png"/>Loading...</p>
           </div>
@@ -97,34 +80,21 @@
 
         <div id="coreui" style="display: none">
             <!-- The core UI -->
-            <h1>Generate QR code</h1>
             <form class="form-inline" name="qrinp">
-                <div class="form-group">
-                    <label for="sourceurl" class="control-label">Text</label>
+                <div class="form-group" style="width: 100%">
+                    <!--Don't use a label when embedded, keep it simple.-->
+                    <!--<label for="sourceurl" class="control-label">Text</label>-->
                     <style type="text/css">
-                        /* make the sourceurl text input as large as possible, on a standard container */
+                        /* make the sourceurl text input as large as possible, on a container-fluid */
 
-                        @media (min-width: 768px) {
-                            input#sourceurl.form-control {
-                                min-width: 396px;
-                            }
-                        }
-
-                        @media (min-width: 992px) {
-                            input#sourceurl.form-control {
-                                min-width: 616px;
-                            }
-                        }
-
-                        @media (min-width: 1200px) {
-                            input#sourceurl.form-control {
-                                min-width: 816px;
-                            }
+                        input#sourceurl.form-control {
+                            min-width: 100%;
                         }
                     </style>
                     <input ng-model="QrText" class="form-control" type="text" id="sourceurl" autocomplete="on" placeholder="Enter an URL or text" name="sourceurl" onpaste="doqr();" oninput="doqr();" title="Define the URL or text to generate a QR code for." />
                 </div>
-                <div class="form-group">
+                <!--Don't use size or level when embedded, keep it simple.-->
+                <div class="form-group" style="display:none">
                     <label for="eccLevelSelector" class="control-label">Level</label>
                     <select ng-model="EccLevel" id="eccLevelSelector" class="form-control" name="ECC" onchange="doqr();" title="The level of the redundancy for the error correction. A higher level means more redundancy and more robustness, but also a more complex QR code.">
                         <option value="1" >L (dense)</option>
@@ -147,22 +117,6 @@
       </div> <!-- The core UI -->
 
     </div> <!-- /container -->
-    <!-- Footer
-    ================================================== -->
-    <footer class="footer">
-        <div class="container">
-        <p class="pull-right"><a href="#">Back to top</a></p>
-        <p>Created by <a href="mailto:marcel@codeministry.ch">marcel@codeministry.ch</a>.
-          Hosted at <a href="http://cyon.ch">cyon.ch</a>.</p>
-        <p>Licensed under the open source <a href ="gpl-3.0.txt" >GPLv3 License</a>.</p>
-        <ul class="footer-links">
-            <li><a href="https://github.com/suterma/quirli">Source</a></li>
-            <li class="muted">&middot;</li>
-            <li><a href="disclaimer.txt">Disclaimer</a></li>
-        </ul>
-        </div>
-    </footer>
-
 <script type="text/javascript">
 
 // alignment pattern

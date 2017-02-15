@@ -64,21 +64,30 @@
 
 <body>
     <div id="contentcontainer" class="container-fluid" ng-controller="qrController">
+
+      <!--Loading notification. A modal dialog, without backdrop, that gets dismissed aftre document ready-->
+      <div id="loadingdisplay" class="modal fade bs-example-modal-sm in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; margin-top:50%;">
+          <div class="modal-dialog modal-sm" role="document">
+<p class="text-muted center-block"><img class="spinning" src="img/quirli_star_icon_16x16.png"/>Loading...</p>
+          </div>
+      </div>
+
         <!--Error notification-->
-        <div id="errordisplay">
+        <div id="errordisplay" style="display: none">
             <div class="alert alert-danger">
-                <div id="errortext">Please enable JavaScript to use this page.</div>
+                <div id="errortext"></div>
             </div>
         </div>
 
-        <div>
+        <div id="coreui" style="display: none">
             <!-- The core UI -->
             <form class="form-inline" name="qrinp">
                 <div class="form-group" style="width: 100%">
-                  <!--Don't use a label when embedded, keep it simple.-->
+                    <!--Don't use a label when embedded, keep it simple.-->
                     <!--<label for="sourceurl" class="control-label">Text</label>-->
                     <style type="text/css">
                         /* make the sourceurl text input as large as possible, on a container-fluid */
+
                         input#sourceurl.form-control {
                             min-width: 100%;
                         }
