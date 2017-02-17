@@ -1,4 +1,4 @@
-/*! 
+/*!
     quirli, replay with ease.
     Copyright (C) 2012 by marcel suter, marcel@codeministry.ch
 
@@ -21,20 +21,19 @@
  * This presentes data on the tightly coupled view (the qr.html file)
  * It uses known identifiers from the view to access and present various data.
  */
- 
+
 //visually initialize the page, including tooltips
 $(document).ready(function () {
     $("#loadingdisplay").hide(); //to signal working javascript to the user
-    $("#coreui").show(); //to signal working javascript to the user		
-    $("[rel=tooltip]").tooltip();     
-    
+    $("[rel=tooltip]").tooltip();
+
     //Specially handle the enter key on the url entry field, to actually change the model on enter key
     $("#sourceurl").keyup(function (event) {
         if (event.keyCode == 13) {
             $("#sourceurl").blur();
         }
-    });     
-    
+    });
+
     setupqr();
     //loads the eventual existing text into a new qr code
     doqr();

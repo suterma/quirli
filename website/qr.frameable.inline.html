@@ -81,12 +81,41 @@
 
 <body>
     <div id="contentcontainer" class="container-fluid" ng-controller="qrController">
-        <!--Error notification-->
-        <div id="errordisplay">
-            <div class="alert alert-danger">
-                <div id="errortext">Please enable JavaScript to use this page.</div>
+
+        <!--A hint to enable JavaScript, that stays on top, if JavaScript actually is missing-->
+        <div class="modal fade in" tabindex="-1" id="pleaseenablejavascript" role="dialog" style="display: block; margin-top:50%;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content alert alert-danger">
+                    Please enable JavaScript.
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <script type="text/javascript">
+            //Just remove the alert about missing javascript
+              var element = document.getElementById("pleaseenablejavascript");
+              element.parentNode.removeChild(element);
+        </script>
+        <!-- /.modal -->
+
+        <div id="loadingdisplay">
+            <div class="modal-backdrop fade in"></div>
+            <!--Loading notification. A modal dialog, without backdrop, that gets dismissed aftre document ready-->
+            <div class="modal fade in" tabindex="-1" role="dialog" style="display: block; margin-top:50%; margin-left:50%; width:32px">
+                <div class="modal-dialog modal-sm" role="document">
+                    <img class="spinning" src="src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAVZJREFUWIXtlb9qAkEQhz+bCHmEQMRGAr5BijxFGrtsY0BIE0jh42wqH0HwFVKk8gmCvRANKEZT3B6Y2T+3u8dZ3QfTHDPzm92Z2YOWljT6wBRYACtgfynhHjADfoGTsMYZAd8O4YsU8BoQbryAkUfwAxgDA+AqMpcyFk0P+9o3wFNKEsMQ2BobxgbNHOL3GeLXwPIsz9J8C9LHnvackwNo7BbqqqApds9zUA7x0lQocCGcxxniZd99BQTnYSWcB4nisu8+887DXjjGrlqJjhD/Nw/JAQl0RfzO5VT7ygLciRxfPsdaQxNgIvLMQ84qUIDKEO8AnyLPW1WQdojrDHGAZ5HnANxWBWU9nQ4egB9RwHtscNbPw9ChOLkUXwM3KYkU8X3vUkz7BLvnJ+AIPKaIpxJa3SPw0qR4qIA1DZ/cV8CBYuCSel6HHcULN6fY88pVa2k55w9tYtw8tUX51AAAAABJRU5ErkJggg==" />
+                </div>
             </div>
         </div>
+        
+        <!--Error notification-->
+        <div id="errordisplay" style="display: none">
+            <div class="alert alert-danger">
+                <div id="errortext"></div>
+            </div>
+        </div>
+
 
         <div>
             <!-- The core UI -->
@@ -1174,8 +1203,8 @@ function gup(url, name) {
  
 //visually initialize the page, including tooltips
 $(document).ready(function () {
-    $("#errordisplay").hide(); //to signal working javascript to the user		
-    $("[rel=tooltip]").tooltip();     
+    $("#loadingdisplay").hide(); //to signal working javascript to the user
+    $("[rel=tooltip]").tooltip();
     
     //Specially handle the enter key on the url entry field, to actually change the model on enter key
     $("#sourceurl").keyup(function (event) {

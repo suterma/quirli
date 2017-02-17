@@ -65,13 +65,33 @@
 <body>
     <div id="contentcontainer" class="container-fluid" ng-controller="qrController">
 
-      <!--Loading notification. A modal dialog, without backdrop, that gets dismissed aftre document ready-->
-      <div id="loadingdisplay" class="modal fade bs-example-modal-sm in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; margin-top:50%;">
-          <div class="modal-dialog modal-sm" role="document">
-<p class="text-muted center-block"><img class="spinning" src="img/quirli_star_icon_16x16.png"/>Loading...</p>
-          </div>
-      </div>
+        <!--A hint to enable JavaScript, that stays on top, if JavaScript actually is missing-->
+        <div class="modal fade in" tabindex="-1" id="pleaseenablejavascript" role="dialog" style="display: block; margin-top:50%;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content alert alert-danger">
+                    Please enable JavaScript.
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <script type="text/javascript">
+            //Just remove the alert about missing javascript
+              var element = document.getElementById("pleaseenablejavascript");
+              element.parentNode.removeChild(element);
+        </script>
+        <!-- /.modal -->
 
+        <div id="loadingdisplay">
+            <div class="modal-backdrop fade in"></div>
+            <!--Loading notification. A modal dialog, without backdrop, that gets dismissed aftre document ready-->
+            <div class="modal fade in" tabindex="-1" role="dialog" style="display: block; margin-top:50%; margin-left:50%; width:32px">
+                <div class="modal-dialog modal-sm" role="document">
+                    <img class="spinning" src="https://github.com/iconic/open-iconic/raw/master/png/loop-circular-4x.png" />
+                </div>
+            </div>
+        </div>
+        
         <!--Error notification-->
         <div id="errordisplay" style="display: none">
             <div class="alert alert-danger">
@@ -79,7 +99,7 @@
             </div>
         </div>
 
-        <div id="coreui" style="display: none">
+        <div id="coreui">
             <!-- The core UI -->
             <form class="form-inline" name="qrinp">
                 <div class="form-group" style="width: 100%">

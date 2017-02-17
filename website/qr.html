@@ -63,7 +63,8 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -80,13 +81,32 @@
         </div>
     </nav>
     <div id="contentcontainer" class="container" ng-controller="qrController">
+        <!--A hint to enable JavaScript, that stays on top, if JavaScript actually is missing-->
+        <div class="modal fade in" tabindex="-1" id="pleaseenablejavascript" role="dialog" style="display: block; margin-top:50%;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content alert alert-danger">
+                    Please enable JavaScript.
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <script type="text/javascript">
+            //Just remove the alert about missing javascript
+              var element = document.getElementById("pleaseenablejavascript");
+              element.parentNode.removeChild(element);
+        </script>
+        <!-- /.modal -->
 
-      <!--Loading notification. A modal dialog, without backdrop, that gets dismissed aftre document ready-->
-      <div id="loadingdisplay" class="modal fade bs-example-modal-sm in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; margin-top:50%;">
-          <div class="modal-dialog modal-sm" role="document">
-<p class="text-muted center-block"><img class="spinning" src="img/quirli_star_icon_16x16.png"/>Loading...</p>
-          </div>
-      </div>
+        <div id="loadingdisplay">
+            <div class="modal-backdrop fade in"></div>
+            <!--Loading notification. A modal dialog, without backdrop, that gets dismissed aftre document ready-->
+            <div class="modal fade in" tabindex="-1" role="dialog" style="display: block; margin-top:50%; margin-left:50%; width:32px">
+                <div class="modal-dialog modal-sm" role="document">
+                    <img class="spinning" src="https://github.com/iconic/open-iconic/raw/master/png/loop-circular-4x.png" />
+                </div>
+            </div>
+        </div>
 
         <!--Error notification-->
         <div id="errordisplay" style="display: none">
@@ -95,7 +115,7 @@
             </div>
         </div>
 
-        <div id="coreui" style="display: none">
+        <div id="coreui">
             <!-- The core UI -->
             <h1>Generate QR code</h1>
             <form class="form-inline" name="qrinp">
@@ -103,26 +123,28 @@
                     <label for="sourceurl" class="control-label">Text</label>
                     <style type="text/css">
                         /* make the sourceurl text input as large as possible, on a standard container */
-
+                        
                         @media (min-width: 768px) {
                             input#sourceurl.form-control {
                                 min-width: 396px;
                             }
                         }
-
+                        
                         @media (min-width: 992px) {
                             input#sourceurl.form-control {
                                 min-width: 616px;
                             }
                         }
-
+                        
                         @media (min-width: 1200px) {
                             input#sourceurl.form-control {
                                 min-width: 816px;
                             }
                         }
                     </style>
-                    <input ng-model="QrText" class="form-control" type="text" id="sourceurl" autocomplete="on" placeholder="Enter an URL or text" name="sourceurl" onpaste="doqr();" oninput="doqr();" title="Define the URL or text to generate a QR code for." />
+                    <input ng-model="QrText" class="form-control" type="text" id="sourceurl" autocomplete="on" placeholder="Enter an URL or text"
+                        name="sourceurl" onpaste="doqr();" oninput="doqr();" title="Define the URL or text to generate a QR code for."
+                    />
                 </div>
                 <div class="form-group">
                     <label for="eccLevelSelector" class="control-label">Level</label>
@@ -133,7 +155,8 @@
                         <option value="4" >H (rugged)</option>
                     </select>
                     <label for="qrSizeSelector" class="control-label">Size</label>
-                    <select ng-model="QrSizeDivider" id="qrSizeSelector" class="form-control" name="QrSizeDivider" onchange="setupqr();doqr();" title="The display size of the QR code. Large means full window size.">
+                    <select ng-model="QrSizeDivider" id="qrSizeSelector" class="form-control" name="QrSizeDivider" onchange="setupqr();doqr();"
+                        title="The display size of the QR code. Large means full window size.">
                         <option value="4" >Small</option>
                         <option value="2" >Medium</option>
                         <option value="1" >Large</option>
@@ -153,7 +176,7 @@
         <div class="container">
         <p class="pull-right"><a href="#">Back to top</a></p>
         <p>Created by <a href="mailto:marcel@codeministry.ch">marcel@codeministry.ch</a>.
-          Hosted at <a href="http://cyon.ch">cyon.ch</a>.</p>
+          Hosted at <a href="http://cyon.ch">cyon.ch</a>.
         <p>Licensed under the open source <a href ="gpl-3.0.txt" >GPLv3 License</a>.</p>
         <ul class="footer-links">
             <li><a href="https://github.com/suterma/quirli">Source</a></li>
@@ -928,14 +951,14 @@ function doqr() {
 	<script type="text/javascript" src="jquery/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript" src="angularjs/1.0.5/angular.min.js"></script>
 
-	<!-- Placed at the end of the document so the pages load faster -->
+	<!-- Placed at the end of the document so the pages load faster-->
 	<script src="bootstrap-3.3.7/js/bootstrap.min.js"></script>
 
 	<!-- Load the qr angular controller.-->
-	<script src="js/qrcontroller.js"></script>
+	<script src="js/qrcontroller.js"></script> 
 
 	<!-- Load the presenter code for this view -->
-	<script src="js/qrpresenter.js"></script>
+	<script src="js/qrpresenter.js"></script> 
 
 	</body>
 </html>

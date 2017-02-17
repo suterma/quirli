@@ -112,7 +112,7 @@ ul.footer-links {
     padding-left: 0;
 }
 
-/* Slow spinning items 
+/* Slow spinning items
 -------------------------------------------------- */
 .spinning {
     animation: spin 2s infinite linear;
@@ -120,13 +120,13 @@ ul.footer-links {
 }
 
 @keyframes spin {
-    from { transform: scale(1) rotate(0deg); }
-    to { transform: scale(1) rotate(360deg); }
+    from { transform: scale(1) rotate(360deg); }
+    to { transform: scale(1) rotate(0deg); }
 }
 
 @-webkit-keyframes spin2 {
-    from { -webkit-transform: rotate(0deg); }
-    to { -webkit-transform: rotate(360deg); }
+    from { -webkit-transform: rotate(360deg); }
+    to { -webkit-transform: rotate(0deg); }
 }
 
 /*Disallow linebreaks sometimes
