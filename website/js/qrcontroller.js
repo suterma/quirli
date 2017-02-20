@@ -27,6 +27,7 @@ function qrController($scope, $location) {
     globalScope = $scope; //TODO to give easy access, but later rework to fit the angular style
     
     $scope.QrText = "";
+    $scope.QrTextReadonly = false;
     $scope.EccLevel = 1;
     $scope.QrSizeDivider = 1; //1 is 100%
 
@@ -43,11 +44,15 @@ function parseQueryParameter($scope) {
     //TODO later use the $location from the scope to get the url, to comply with angular style
     var url = window.location.href;
 
-    //Load track from parameters		
+    //Load text from parameters		
     var qrText = decodeURIComponent(gup(url, 'text'));
     if (qrText) { //there is any?
         $scope.QrText = qrText;
     }
+    
+    //Load readonly state from parameters
+    var qrTextReadonly = (gup(url, 'readonly') === "true");
+    $scope.QrTextReadonly = qrTextReadonly;
 }
 
 //---Helpers

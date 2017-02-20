@@ -104,7 +104,7 @@
             <!--Loading notification. A modal dialog, without backdrop, that gets dismissed aftre document ready-->
             <div class="modal fade in" tabindex="-1" role="dialog" style="display: block; margin-top:50%; margin-left:50%; width:32px">
                 <div class="modal-dialog modal-sm" role="document">
-                    <img class="spinning" src="src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAVZJREFUWIXtlb9qAkEQhz+bCHmEQMRGAr5BijxFGrtsY0BIE0jh42wqH0HwFVKk8gmCvRANKEZT3B6Y2T+3u8dZ3QfTHDPzm92Z2YOWljT6wBRYACtgfynhHjADfoGTsMYZAd8O4YsU8BoQbryAkUfwAxgDA+AqMpcyFk0P+9o3wFNKEsMQ2BobxgbNHOL3GeLXwPIsz9J8C9LHnvackwNo7BbqqqApds9zUA7x0lQocCGcxxniZd99BQTnYSWcB4nisu8+887DXjjGrlqJjhD/Nw/JAQl0RfzO5VT7ygLciRxfPsdaQxNgIvLMQ84qUIDKEO8AnyLPW1WQdojrDHGAZ5HnANxWBWU9nQ4egB9RwHtscNbPw9ChOLkUXwM3KYkU8X3vUkz7BLvnJ+AIPKaIpxJa3SPw0qR4qIA1DZ/cV8CBYuCSel6HHcULN6fY88pVa2k55w9tYtw8tUX51AAAAABJRU5ErkJggg==" />
+                    <img class="spinning" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAVZJREFUWIXtlb9qAkEQhz+bCHmEQMRGAr5BijxFGrtsY0BIE0jh42wqH0HwFVKk8gmCvRANKEZT3B6Y2T+3u8dZ3QfTHDPzm92Z2YOWljT6wBRYACtgfynhHjADfoGTsMYZAd8O4YsU8BoQbryAkUfwAxgDA+AqMpcyFk0P+9o3wFNKEsMQ2BobxgbNHOL3GeLXwPIsz9J8C9LHnvackwNo7BbqqqApds9zUA7x0lQocCGcxxniZd99BQTnYSWcB4nisu8+887DXjjGrlqJjhD/Nw/JAQl0RfzO5VT7ygLciRxfPsdaQxNgIvLMQ84qUIDKEO8AnyLPW1WQdojrDHGAZ5HnANxWBWU9nQ4egB9RwHtscNbPw9ChOLkUXwM3KYkU8X3vUkz7BLvnJ+AIPKaIpxJa3SPw0qR4qIA1DZ/cV8CBYuCSel6HHcULN6fY88pVa2k55w9tYtw8tUX51AAAAABJRU5ErkJggg==" />
                 </div>
             </div>
         </div>
@@ -129,7 +129,7 @@
                             min-width: 100%;
                         }
                     </style>
-                    <input ng-model="QrText" class="form-control" type="text" id="sourceurl" autocomplete="on" placeholder="Enter an URL or text" name="sourceurl" onpaste="doqr();" oninput="doqr();" title="Define the URL or text to generate a QR code for." />
+                    <input ng-model="QrText" ng-readonly="QrTextReadonly" class="form-control" type="text" id="sourceurl" autocomplete="on" placeholder="Enter an URL or text" name="sourceurl" onpaste="doqr();" oninput="doqr();" title="Define the URL or text to generate a QR code for." />
                 </div>
                 <!--Don't use size or level when embedded, keep it simple.-->
                 <div class="form-group" style="display:none">
@@ -1155,6 +1155,10 @@ function parseQueryParameter($scope) {
     if (qrText) { //there is any?
         $scope.QrText = qrText;
     }
+    
+    //Load readonly state from parameters
+    var qrTextReadonly = (gup(url, 'readonly') === "true");
+    $scope.QrTextReadonly = qrTextReadonly;
 }
 
 //---Helpers

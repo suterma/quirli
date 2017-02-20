@@ -112,7 +112,7 @@
                             min-width: 100%;
                         }
                     </style>
-                    <input ng-model="QrText" class="form-control" type="text" id="sourceurl" autocomplete="on" placeholder="Enter an URL or text" name="sourceurl" onpaste="doqr();" oninput="doqr();" title="Define the URL or text to generate a QR code for." />
+                    <input ng-model="QrText" ng-readonly="QrTextReadonly" class="form-control" type="text" id="sourceurl" autocomplete="on" placeholder="Enter an URL or text" name="sourceurl" onpaste="doqr();" oninput="doqr();" title="Define the URL or text to generate a QR code for." />
                 </div>
                 <!--Don't use size or level when embedded, keep it simple.-->
                 <div class="form-group" style="display:none">

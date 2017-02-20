@@ -76,11 +76,9 @@
     </nav>
 
     <div id="contentcontainer" class="container" ng-controller="qrController">
-        <h1>Embedded QR code generator below.</h1>
-
-        <iframe src="qr.frameable.inline.html" style="border:none;" width="100%" min-height="300vh" height="400px" />
-        <!--onload="this.width=window.width;this.height=window.height;"-->
-
+        <h1>An embedded QR code generator with text input.</h1>
+        <iframe src="qr.frameable.inline.html?text=test&readonly=true" style="border:none;" width="100%" min-height="300vh" height="400px"
+        />
     </div>
     <!-- /container -->
     <!-- Footer
@@ -88,25 +86,25 @@
     asfsadf
     <footer class="footer">
         <div class="container">
-        <p class="pull-right"><a href="#">Back to top</a></p>
-        <p>Created by <a href="mailto:marcel@codeministry.ch">marcel@codeministry.ch</a>.
-          Hosted at <a href="http://cyon.ch">cyon.ch</a>.
-        <p>Licensed under the open source <a href ="gpl-3.0.txt" >GPLv3 License</a>.</p>
-        <ul class="footer-links">
-            <li><a href="https://github.com/suterma/quirli">Source</a></li>
-            <li class="muted">&middot;</li>
-            <li><a href="disclaimer.txt">Disclaimer</a></li>
-        </ul>
+            <p class="pull-right"><a href="#">Back to top</a></p>
+            <p>Created by <a href="mailto:marcel@codeministry.ch">marcel@codeministry.ch</a>. Hosted at <a href="http://cyon.ch">cyon.ch</a>.
+                <p>Licensed under the open source <a href="gpl-3.0.txt">GPLv3 License</a>.</p>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/suterma/quirli">Source</a></li>
+                    <li class="muted">&middot;</li>
+                    <li><a href="disclaimer.txt">Disclaimer</a></li>
+                </ul>
         </div>
     </footer>
 
-	<!-- Le javascript
+    <!-- Le javascript
 	================================================== -->
-	<!-- Loading from own server to avoid dependency on other resources. This also simplifies offline usage-->
-	<script type="text/javascript" src="jquery/jquery-3.1.1.min.js"></script>
-	<script type="text/javascript" src="angularjs/1.0.5/angular.min.js"></script>
+    <!-- Loading from own server to avoid dependency on other resources. This also simplifies offline usage-->
+    <script type="text/javascript" src="jquery/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="angularjs/1.0.5/angular.min.js"></script>
 
-	<!-- Placed at the end of the document so the pages load faster-->
-	<script src="bootstrap-3.3.7/js/bootstrap.min.js"></script>
-	</body>
+    <!-- Placed at the end of the document so the pages load faster-->
+    <script src="bootstrap-3.3.7/js/bootstrap.min.js"></script>
+</body>
+
 </html>
