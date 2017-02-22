@@ -82,10 +82,10 @@
     </nav>
     <div id="contentcontainer" class="container" ng-controller="qrController">
         <!--A hint to enable JavaScript, that stays on top, if JavaScript actually is missing-->
-        <div class="modal fade in" tabindex="-1" id="pleaseenablejavascript" role="dialog" style="display: block; margin-top:50%;">
+        <div class="modal in" tabindex="-1" id="pleaseenablejavascript" role="dialog" style="display: block;">
             <div class="modal-dialog" role="document">
                 <div class="modal-content alert alert-danger">
-                    Please enable JavaScript.
+                    <p class="text-center">Please enable JavaScript.</p>
                 </div>
                 <!-- /.modal-content -->
             </div>
@@ -99,11 +99,13 @@
         <!-- /.modal -->
 
         <div id="loadingdisplay">
-            <div class="modal-backdrop fade in"></div>
-            <!--Loading notification. A modal dialog, without backdrop, that gets dismissed aftre document ready-->
-            <div class="modal fade in" tabindex="-1" role="dialog" style="display: block; margin-top:50%; margin-left:50%; width:32px">
-                <div class="modal-dialog modal-sm" role="document">
-                    <img class="spinning" src="https://github.com/iconic/open-iconic/raw/master/png/loop-circular-4x.png" />
+            <div class="modal-backdrop in"></div>
+            <!--Loading notification. A modal dialog, without dialog box, that gets dismissed after document ready-->
+            <div class="modal in" tabindex="-1" role="dialog" style="display: block;">
+                <!-- margin-top of 25% has been proven empirically to be best for this layout -->
+                <div class="modal-dialog modal-sm center-block" role="document" style="margin-top: 25%; margin-bottom: auto; height: 32px; width:32px">
+                    <img class="spinning" src="https://github.com/iconic/open-iconic/raw/master/png/loop-circular-4x.png" style="height: 32px; width:32px"
+                    />
                 </div>
             </div>
         </div>
@@ -122,23 +124,24 @@
                 <div class="form-group">
                     <label for="sourceurl" class="control-label">Text</label>
                     <style type="text/css">
-                        /* make the sourceurl text input as large as possible, on a standard container */
+                        /* make the sourceurl text input as large as possible, on a standard container. 
+                        The values have been chosen by experience on chrome and firefox under ubuntu 14.04 */
                         
                         @media (min-width: 768px) {
                             input#sourceurl.form-control {
-                                min-width: 396px;
+                                min-width: 389px;
                             }
                         }
                         
                         @media (min-width: 992px) {
                             input#sourceurl.form-control {
-                                min-width: 616px;
+                                min-width: 609px;
                             }
                         }
                         
                         @media (min-width: 1200px) {
                             input#sourceurl.form-control {
-                                min-width: 816px;
+                                min-width: 809px;
                             }
                         }
                     </style>
@@ -163,7 +166,7 @@
                     </select>
                 </div>
             </form>
-            <div id="qrdiv" class="center-block" style="background:white; width:360px; height:360px">
+            <div id="qrdiv" class="center-block" style="background: white;">
                 <canvas id="qrcanv">No Canvas Support?
 				</div>
 
