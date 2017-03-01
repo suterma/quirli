@@ -120,52 +120,42 @@
         <div id="coreui">
             <!-- The core UI -->
             <h1>Generate QR code</h1>
-            <form class="form-inline" name="qrinp">
-                <div class="form-group">
-                    <label for="sourceurl" class="control-label">Text</label>
-                    <style type="text/css">
-                        /* make the sourceurl text input as large as possible, on a standard container. 
-                        The values have been chosen by experience on chrome and firefox under ubuntu 14.04 */
-                        
-                        @media (min-width: 768px) {
-                            input#sourceurl.form-control {
-                                min-width: 389px;
-                            }
-                        }
-                        
-                        @media (min-width: 992px) {
-                            input#sourceurl.form-control {
-                                min-width: 609px;
-                            }
-                        }
-                        
-                        @media (min-width: 1200px) {
-                            input#sourceurl.form-control {
-                                min-width: 809px;
-                            }
-                        }
-                    </style>
-                    <input ng-model="QrText" ng-readonly="QrTextReadonly" class="form-control" type="text" id="sourceurl" autocomplete="on" placeholder="Enter an URL or text"
-                        name="sourceurl" onpaste="doqr();" oninput="doqr();" title="Define the URL or text to generate a QR code for."
-                    />
+
+            <form class="row" name="qrinp">
+                <div class="col-lg-8">
+                    <div class="input-group">
+                        <label for="sourceurl" class="input-group-addon">Content</label>
+                        <input ng-model="QrText" ng-readonly="QrTextReadonly" class="form-control" type="text" id="sourceurl" autocomplete="on" placeholder="Enter an URL or text"
+                            name="sourceurl" onpaste="doqr();" oninput="doqr();" title="Define the URL or text to generate a QR code for."
+                        />
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="eccLevelSelector" class="control-label">Level</label>
-                    <select ng-model="EccLevel" id="eccLevelSelector" class="form-control" name="ECC" onchange="doqr();" title="The level of the redundancy for the error correction. A higher level means more redundancy and more robustness, but also a more complex QR code.">
+
+                <div class="col-lg-2">
+                    <div class="input-group">
+                        <label for="eccLevelSelector" class="input-group-addon">Level</label>
+                        <select ng-model="EccLevel" id="eccLevelSelector" class="form-control" name="ECC" onchange="doqr();" title="The level of the redundancy for the error correction. A higher level means more redundancy and more robustness, but also a more complex QR code.">
                         <option value="1" >L (dense)</option>
                         <option value="2" >M</option>
                         <option value="3" >Q</option>
                         <option value="4" >H (rugged)</option>
                     </select>
-                    <label for="qrSizeSelector" class="control-label">Size</label>
-                    <select ng-model="QrSizeDivider" id="qrSizeSelector" class="form-control" name="QrSizeDivider" onchange="setupqr();doqr();"
-                        title="The display size of the QR code. Large means full window size.">
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="input-group">
+                        <label for="qrSizeSelector" class="input-group-addon">Size</label>
+                        <select ng-model="QrSizeDivider" id="qrSizeSelector" class="form-control" name="QrSizeDivider" onchange="setupqr();doqr();"
+                            title="The display size of the QR code. Large means full window size.">
                         <option value="4" >Small</option>
                         <option value="2" >Medium</option>
                         <option value="1" >Large</option>
                     </select>
+                    </div>
                 </div>
             </form>
+
             <div id="qrdiv" class="center-block" style="background: white;">
                 <canvas id="qrcanv">No Canvas Support?
 				</div>

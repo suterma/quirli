@@ -112,6 +112,15 @@ ul.footer-links {
     padding-left: 0;
 }
 
+/* readonly form controls should look like normal text*/ 
+input[readonly="readOnly"].form-control{
+    background-color: white;
+    border: none;
+    color: #333;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
 /* Slow spinning items
 -------------------------------------------------- */
 .spinning {
