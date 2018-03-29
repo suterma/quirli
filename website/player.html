@@ -55,7 +55,7 @@
     
     <!-- Loading from own server to avoid dependency on other resources. This also simplifies offline usage-->
     <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="angularjs/1.0.5/angular.min.js"></script>
+    <script type="text/javascript" src="angular-1.6.9/angular.js"></script>
 
     <!-- Mediaelement by John Dyer 	-->    
     <!-- Already specified copy of JQuery is used instead of the mediaelement one.-->
@@ -90,8 +90,8 @@
 		          <div class="nav-collapse collapse">
 		            <ul class="nav">
                       <li class="divider-vertical"></li>
-		              <li><a onclick="setViewStyle('edit')">Edit</a></li>
-		              <li><a onclick="setViewStyle('play')">Play</a></li>
+		              <li><a ng-click="setViewStyle('edit')">Edit</a></li>
+		              <li><a ng-click="setViewStyle('play')">Play</a></li>
 					  <!-- experimental
                       <li class="divider-vertical"></li>
 		              <li><a href="playlist.html">Playlist</a></li>
@@ -171,22 +171,22 @@
                     <div id="quirliplayer"></div>
 					<div id="playercontrols" ng-show="ViewStyle == 'edit' && (PlaybackType.length)">
 						<form ng-submit="addCueX()">
-                        <button class="btn btn-inverse" value="Play"        onclick="doPlay()" >
+                        <button class="btn btn-inverse" value="Play"        ng-click="doPlay()" >
                             <i class="icon-play icon-white" rel="tooltip" title="Starts playing from the current position."></i>
                         </button> 
-                        <button class="btn btn-inverse" value="Pause"        onclick="doPause()" >
+                        <button class="btn btn-inverse" value="Pause"        ng-click="doPause()" >
                             <i class="icon-pause icon-white" rel="tooltip" title="Pauses playing at the current position."></i>
                         </button> 
-                        <button class="btn btn-inverse" value="Take cue here!"        onclick="doAddCueHere()" >
+                        <button class="btn btn-inverse" value="Take cue here!"        ng-click="doAddCueHere()" >
                             <i class="icon-star icon-white" rel="tooltip" title="Takes a cue at the current position."></i> Take cue here!
                         </button>
        					<i class="icon-question-sign" rel="tooltip" title="Review the media in the player. At the desired positions press [Take cue here!] to create a cue point"></i>
  
                         <!--
-						 <input type="button" class="btn btn-inverse" value="Volume +"	onclick="doIncreaseVolume()" /> 
-						<input type="button" class="btn btn-inverse" value="Volume -" 	onclick="doDecreaseVolume()" />
-						<input type="button" class="btn btn-inverse" value="Load"		onclick="loadCues()" /> 
-						<input type="button" class="btn btn-inverse" value="Save" 		onclick="saveCues()" />
+						 <input type="button" class="btn btn-inverse" value="Volume +"	ng-click="doIncreaseVolume()" /> 
+						<input type="button" class="btn btn-inverse" value="Volume -" 	ng-click="doDecreaseVolume()" />
+						<input type="button" class="btn btn-inverse" value="Load"		ng-click="loadCues()" /> 
+						<input type="button" class="btn btn-inverse" value="Save" 		ng-click="saveCues()" />
 						 -->
 						</form>
 					</div>
@@ -236,7 +236,7 @@
 				
 				<div ng-show="ViewStyle == 'edit' && PlaybackType.length" id="persistenceoptions"> <!-- Persistence -->
                     <p>
-			    	<a class="btn btn-inverse" data-toggle="modal" href="#modalSaveAsLink" onclick="SaveAsLink();">Share as link...</a>
+			    	<a class="btn btn-inverse" data-toggle="modal" href="#modalSaveAsLink" ng-click="SaveAsLink();">Share as link...</a>
 					<i class="icon-question-sign" rel="tooltip" title="Provides the track, consisting of media url and cues, as a reusable link."></i>
                     </p>
 		    	</div>		    	
