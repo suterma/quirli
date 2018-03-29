@@ -22,13 +22,6 @@
  * It uses known identifiers from the view to access and present various data.
  */
 
-
-//set the view style (used by the menu items on the top menu bar)
-function setViewStyle(style) {
-    globalScope.ViewStyle = style;
-    globalScope.$apply();
-}
-
 //visually initialize the page, including tooltips
 $(document).ready(function() {
     $("#loadingdisplay").hide(); //to signal working javascript to the user
@@ -49,7 +42,7 @@ $(document).ready(function() {
 //and defines the actions for a media element media
 function onMediaelementPlayerReady(mediaelementplayer) {
     mediaelementplayer.load();
-    defineMediaPlayerHandling(mediaelementplayer);
+    defineMediaPlayerHandling(mediaelementplayer, globalScope);
     globalScope.PlaybackType = mediaelementplayer.pluginType;
     globalScope.$apply();
 }
@@ -197,60 +190,37 @@ function presentCue(caption, position) {
     globalScope.addCueAsNewest();
 }
 
-//creates an url of the current page, with parameters describing the media and cues
-//and presents that in a textbox for copying by the user
-function SaveAsLink() {
 
-    var cues = [];
-    $.each(globalScope.cues, function(index, item) {
-        //alert(index + ': ' + value);
-        var cue = item.position + "=" + encodeURIComponent(item.text);
-        cues.push(cue);
-    });
-    var serializedCues = cues.join('&');
-
-    //serialize the media file url
-    var pageUrl = window.location.href.split('?')[0]; //get the url without the (probably already existing) query part
-
-    //provide the link url
-    var linkUrl = pageUrl + "?media=" + encodeURIComponent(globalScope.MediaUrl) +
-        "&title=" + encodeURIComponent(globalScope.TrackTitle) +
-        "&artist=" + encodeURIComponent(globalScope.ArtistName) +
-        "&album=" + encodeURIComponent(globalScope.AlbumName) +
-        "&" + serializedCues;
-    $("#savelinkInBox").val(linkUrl);
-    $("#savelinkToLoad").attr("href", linkUrl);
-}
 
 //defines the concrete MediaelementJs player actions for the standardized do...Actions
-function defineMediaPlayerHandling(mediaPlayer) {
-    doPlay = function() {
+function defineMediaPlayerHandling(mediaPlayer, globalscope) {
+    globalscope.doPlay = function() {
         //The audio flash requires this check below, otherwise it plays more than once when clicked the play button repeatedly
         if (mediaPlayer.paused || mediaPlayer.ended) {
             mediaPlayer.play();
         }
     } //make sure we do not "play twice"
-    doPause = function() {
+    globalscope.doPause = function() {
         mediaPlayer.pause();
     }
-    doStop = function() {
+    globalscope.doStop = function() {
         mediaPlayer.pause();
         mediaPlayer.stop();
     } //To really stop any ongoing flash stuff
-    doIncreaseVolume = function() {
+    globalscope.doIncreaseVolume = function() {
         mediaPlayer.setVolume(mediaPlayer.volume + 0.1);
     }
-    doDecreaseVolume = function() {
+    globalscope.doDecreaseVolume = function() {
         mediaPlayer.setVolume(mediaPlayer.volume - 0.1);
     }
     //Seeks to the point in time, but does not autoplay
-    doSeekTo = function(position) {
+    globalscope.doSeekTo = function(position) {
         mediaPlayer.setCurrentTime(position);
     }
-    doGetPosition = function() {
+    globalscope.doGetPosition = function() {
         return mediaPlayer.currentTime;
     }
-    doAddCueHere = function() {
-        presentCue('', doGetPosition().toFixed(2));
+    globalscope.doAddCueHere = function() {
+        presentCue('', globalscope.doGetPosition().toFixed(2));
     } //round to two decimal places only, more is not audible anyway
 }

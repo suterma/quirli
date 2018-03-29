@@ -105,13 +105,44 @@ function playerController($scope, $location) {
     //This uses the global do actions.
     $scope.playFromPosition = function (position) {
         if (quirliControlType === "youtube") {
-            doSeekTo(position); //invoke global doSeekTo method as defined for the media players
-            doPlay(); //for youtube, playing must start after seeking.
+            $scope.doSeekTo(position); //invoke global doSeekTo method as defined for the media players
+            $scope.doPlay(); //for youtube, playing must start after seeking.
         }
         else {
-            doPlay(); //playing first seems necessary to make this work after a load of a new file in all other cases than youtube. Seeking and then playing will not work in this case.
-            doSeekTo(position); //invoke global doSeekTo method as defined for the media players
+            $scope.doPlay(); //playing first seems necessary to make this work after a load of a new file in all other cases than youtube. Seeking and then playing will not work in this case.
+            $scope.doSeekTo(position); //invoke global doSeekTo method as defined for the media players
         }
+    }
+
+    $scope.setViewStyle = function (style) {
+        $scope.ViewStyle = style;
+        $scope.$apply();
+    }
+
+
+    //creates an url of the current page, with parameters describing the media and cues
+    //and presents that in a textbox for copying by the user
+    $scope.SaveAsLink = function() {
+        var cues = [];
+        $.each($scope.cues, function (index, item) {
+            //alert(index + ': ' + value);
+            var cue = item.position + "=" + encodeURIComponent(item.text);
+            cues.push(cue);
+        });
+        var serializedCues = cues.join('&');
+
+        //serialize the media file url
+        var pageUrl = window.location.href.split('?')[0]; //get the url without the (probably already existing) query part
+
+        //provide the link url
+        var linkUrl = pageUrl + "?media=" + encodeURIComponent($scope.MediaUrl) +
+            "&title=" + encodeURIComponent($scope.TrackTitle) +
+            "&artist=" + encodeURIComponent($scope.ArtistName) +
+            "&album=" + encodeURIComponent($scope.AlbumName) +
+            "&" + serializedCues;
+        //TODO instead of saving diretcly to items, provide as model property
+        $("#savelinkInBox").val(linkUrl);
+        $("#savelinkToLoad").attr("href", linkUrl);
     }
 
     //preload this scope from the url query when available

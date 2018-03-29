@@ -1,0 +1,4 @@
+website/.vs/slnx.sqlite
+*.sqlite-journal
+*.suo
+website/.vs/VSWorkspaceState.json

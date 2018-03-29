@@ -19,20 +19,20 @@
 <html ng-app="quirli" lang="en">
 <head>
     <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
-	<meta charset="UTF-8" />
-	<meta http-equiv="content-language" content="en" />
-	<title>quirli - replay and share media with cues.</title>
-	<meta name="Copyright" content="GPLv3 licensed by codeministry.ch" />
-	<meta name="dc.language" content="en" />
-	<meta name="geo.country" content="CH" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> <!-- To force IE9 to use the currently latest rendering engine -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="content-language" content="en" />
+    <title>quirli - replay and share media with cues.</title>
+    <meta name="Copyright" content="GPLv3 licensed by codeministry.ch" />
+    <meta name="dc.language" content="en" />
+    <meta name="geo.country" content="CH" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> <!-- To force IE9 to use the currently latest rendering engine -->
     <meta name="description" content="Media player for replay and rehearsal with cues.">
     <meta name="author" content="codeministry.ch">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
     <!-- Le styles -->
-    <!-- Note: Twitter Bootstrap is not officially hosted on a CDN, so we host that ourselves for now-->
+    <!-- Note: We host Twitter Bootstrap ourselved, to be completely self-contained-->
     <!-- use a customized bootstrap version for quirli, prepending parts.-->
     <link href="bootstrap/css/quirli-mods-pre.css" rel="stylesheet">
     <!-- use prepending custom modifications for quirli. To make the body move-down for the top navbar working, this css must get loaded first.-->
@@ -42,42 +42,42 @@
     <!-- use a customized bootstrap version for quirli, postpending parts.-->
     <link href="bootstrap/css/quirli-mods.css" rel="stylesheet">
 
-   
-    <!-- Le fav and touch icons -->
-	<link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
-    <!-- 
+    <!-- Le fav and touch icons -->
+    <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <!--
     Because there is no official apple support right now, we omit these apple specific things
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png"> -->
-    
-    <!-- Loading from own server to avoid dependency on other resources. This also simplifies offline usage-->
+    <!-- Loading from own server to avoid dependency on other resources. This also simplifies offline usage>-->
     <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="angular-1.6.9/angular.js"></script>
+    <script type="text/javascript" src="angularjs/1.0.5/angular.js"></script>
+    <!--//TODO try latest angularjs-->
+    <!--<script type="text/javascript" src="angular-1.6.9/angular.js"></script>-->
 
-    <!-- Mediaelement by John Dyer 	-->    
+    <!-- Mediaelement by John Dyer 	-->
     <!-- Already specified copy of JQuery is used instead of the mediaelement one.-->
-	<script src="mediaelement/mediaelement-and-player.min.js"></script>
-	<link rel="stylesheet" href="mediaelement/mediaelementplayer.min.css" />
+    <script src="mediaelement/mediaelement-and-player.min.js"></script>
+    <link rel="stylesheet" href="mediaelement/mediaelementplayer.min.css" />
 
-	<!-- Load the track angular controller.-->
-	 <script src="js/playercontroller.js"></script>
+    <!-- Load the track angular controller.-->
+    <script src="js/playercontroller.js"></script>
 
     <!-- Load the playlist angular controller.-->
-	 <script src="js/playlistcontroller.js"></script>
-    
+    <script src="js/playlistcontroller.js"></script>
+
     <!-- Load the keyboard angular controller.
-	 <script src="js/keyboardcontroller.js"></script>-->
-    
+     <script src="js/keyboardcontroller.js"></script>-->
     <!-- Load the presenter code for this view -->
-    <script src="js/playerpresenter.js"></script> 
-    
+    <script src="js/playerpresenter.js"></script>
+
     <!-- The JSONP loader library (by www.nonobtrusive.com)-->
-    <script src="lightweightjsonp/jsonp.js"></script>   
+    <script src="lightweightjsonp/jsonp.js"></script>
 </head>	
-	<body>
+	<body  ng-controller="playerController">
 		<div class="navbar navbar-inverse navbar-fixed-top">
 		      <div class="navbar-inner">
 		        <div class="container">
@@ -88,20 +88,11 @@
 		          </a>
 		          <a class="brand" href="index.html">quirli <img src = "img/quirli_app_icon_16x16.png"/></a>
 		          <div class="nav-collapse collapse">
-		            <ul class="nav">
-                      <li class="divider-vertical"></li>
-		              <li><a ng-click="setViewStyle('edit')">Edit</a></li>
-		              <li><a ng-click="setViewStyle('play')">Play</a></li>
-					  <!-- experimental
-                      <li class="divider-vertical"></li>
-		              <li><a href="playlist.html">Playlist</a></li>
-                      <li class="dropdown">
-                          <a href="#" id="dropplaylist" role="button" class="dropdown-toggle" data-toggle="dropdown">Menu-Playlist<small>(Experimental)</small></a>
-                          <ul class="dropdown-menu" role="menu" aria-labelledby="dropplaylist" ng-controller="playlistcontroller">
-                              <li ng-repeat="track in tracks"><a tabindex="-1" href="#" ng-click="loadTrack(track.url)"><i class="icon-play-circle icon-white" rel="tooltip" title="Loads the track into the player."></i>&nbsp;{{track.title}}</a></li>
-                         </ul>
-                      </li>-->
-		            </ul>
+                      <ul class="nav">
+                          <li class="divider-vertical"></li>
+                          <li><a ng-click="setViewStyle('edit')">Edit</a></li>
+                          <li><a ng-click="setViewStyle('play')">Play</a></li>
+                      </ul>
 		          </div><!--/.nav-collapse -->
 		    	</div>
 			</div>
@@ -122,7 +113,7 @@
     </div>
             </div>-->
 
-		<div  class="container" ng-controller="playerController">
+		<div  class="container">
 	        <!--Error notification-->
 		    <div id="errordisplay">
 			    <div class="alert alert-error">
@@ -218,10 +209,6 @@
 							    </div>
 							</li>
 						</ul>
-                        <!-- Not used, as we do not recycle at the moment, but immediately trash
-						<form ng-submit="addCue()">
-							<span>{{remaining()}} of {{cues.length}} used</span> [ <a href="" ng-click="archive()">recycle checked</a> ]
-						</form>-->
 					</div>
 					<div ng-show="ViewStyle == 'play'" id="cuedisplayplay"> <!-- cues view alternative, simple style -->
 						<!-- Not used right now, in favor of the simpler method below<ul class="unstyled">
@@ -236,7 +223,7 @@
 				
 				<div ng-show="ViewStyle == 'edit' && PlaybackType.length" id="persistenceoptions"> <!-- Persistence -->
                     <p>
-			    	<a class="btn btn-inverse" data-toggle="modal" href="#modalSaveAsLink" ng-click="SaveAsLink();">Share as link...</a>
+			    	<a class="btn btn-inverse" data-toggle="modal" href="#modalSaveAsLink" ng-click="SaveAsLink()">Share as link...</a>
 					<i class="icon-question-sign" rel="tooltip" title="Provides the track, consisting of media url and cues, as a reusable link."></i>
                     </p>
 		    	</div>		    	
