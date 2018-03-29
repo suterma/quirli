@@ -1,7 +1,7 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--
     quirli, replay with ease.
-    Copyright (C) 2012 by marcel suter, marcel@codeministry.ch
+    Copyright (C) 2012-2018 by marcel suter, marcel@codeministry.ch
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,13 +21,12 @@
     specifically designed to be embeddable inside a webpage. It
     therefore omits navigation, navs, menus headers and footers.
 
-    The included Javascript QR Encoder is originally 
-    Copyright 2010, tz@execpc.com, released under GPLv3. 
+    The included Javascript QR Encoder is originally
+    Copyright 2010, tz@execpc.com, released under GPLv3.
     It has been slightly adapted to fit the quirli project.
     See below for more information.
 -->
 <html ng-app="qr" lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -41,7 +40,6 @@
     <meta name="geo.country" content="CH" />
     <meta name="description" content="Media player for replay and rehearsal with cues, featuring QR codes.">
     <meta name="author" content="codeministry.ch">
-
     <!-- Le styles -->
     <!-- Note: Bootstrap is not officially hosted on a CDN, so we host that ourselves for now-->
     <link href="bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -49,28 +47,25 @@
     <link href="bootstrap-3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
     <!-- use a customized bootstrap template for quirli.-->
     <link href="bootstrap-3.3.7/css/quirli-template.css" rel="stylesheet">
-        <!-- Le fav and touch icons -->
+    <!-- Le fav and touch icons -->
     <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-
     <!--
     Because there is no official apple support right now, we omit these apple specific things
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png"> -->
-
     <!-- Specific styles for frameable qr parges -->
     <style type="text/css">
-    /* padding small to compensate for missing sticky top nav */
-    body {
-        padding-top: 15px;
-    }
+
+        /* padding small to compensate for missing sticky top nav */
+        body {
+            padding-top: 15px;
+        }
     </style>
 </head>
-
 <body>
     <div id="contentcontainer" class="container-fluid" ng-controller="qrController">
-
         <!--A hint to enable JavaScript, that stays on top, if JavaScript actually is missing-->
         <div class="modal fade in" tabindex="-1" id="pleaseenablejavascript" role="dialog" style="display: block; margin-top:50%;">
             <div class="modal-dialog" role="document">
@@ -83,11 +78,10 @@
         </div>
         <script type="text/javascript">
             //Just remove the alert about missing javascript
-              var element = document.getElementById("pleaseenablejavascript");
-              element.parentNode.removeChild(element);
+            var element = document.getElementById("pleaseenablejavascript");
+            element.parentNode.removeChild(element);
         </script>
         <!-- /.modal -->
-
         <div id="loadingdisplay">
             <div class="modal-backdrop fade in"></div>
             <!--Loading notification. A modal dialog, without backdrop, that gets dismissed aftre document ready-->
@@ -97,14 +91,13 @@
                 </div>
             </div>
         </div>
-        
+
         <!--Error notification-->
         <div id="errordisplay" style="display: none">
             <div class="alert alert-danger">
                 <div id="errortext"></div>
             </div>
         </div>
-
         <div id="coreui">
             <!-- The core UI -->
             <form class="form-inline" name="qrinp">
@@ -112,6 +105,7 @@
                     <!--Don't use a label when embedded, keep it simple.-->
                     <!--<label for="sourceurl" class="control-label">Text</label>-->
                     <style type="text/css">
+
                         /* make the sourceurl text input as large as possible, on a container-fluid */
 
                         input#sourceurl.form-control {
@@ -124,51 +118,44 @@
                 <div class="form-group" style="display:none">
                     <label for="eccLevelSelector" class="control-label">Level</label>
                     <select ng-model="EccLevel" id="eccLevelSelector" class="form-control" name="ECC" onchange="doqr();" title="The level of the redundancy for the error correction. A higher level means more redundancy and more robustness, but also a more complex QR code.">
-                        <option value="1" >L (dense)</option>
-                        <option value="2" >M</option>
-                        <option value="3" >Q</option>
-                        <option value="4" >H (rugged)</option>
+                        <option value="1">L (dense)</option>
+                        <option value="2">M</option>
+                        <option value="3">Q</option>
+                        <option value="4">H (rugged)</option>
                     </select>
                     <label for="qrSizeSelector" class="control-label">Size</label>
                     <select ng-model="QrSizeDivider" id="qrSizeSelector" class="form-control" name="QrSizeDivider" onchange="setupqr();doqr();" title="The display size of the QR code. Large means full window size.">
-                        <option value="4" >Small</option>
-                        <option value="2" >Medium</option>
-                        <option value="1" >Large</option>
+                        <option value="4">Small</option>
+                        <option value="2">Medium</option>
+                        <option value="1">Large</option>
                     </select>
                 </div>
             </form>
             <div id="qrdiv" class="center-block" style="background:white; width:360px; height:360px">
                 <canvas id="qrcanv">No Canvas Support?
-				</div>
-
-      </div> <!-- The core UI -->
-
+            </div>
+        </div> <!-- The core UI -->
     </div> <!-- /container -->
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Loading from own server to avoid dependency on other resources. This also simplifies offline usage-->
+    <script type="text/javascript" src="jquery/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="angularjs/1.0.5/angular.min.js"></script>
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="bootstrap-3.3.7/js/bootstrap.min.js"></script>
 
-	<!-- Le javascript
-	================================================== -->
-	<!-- Loading from own server to avoid dependency on other resources. This also simplifies offline usage-->
-	<script type="text/javascript" src="jquery/jquery-3.1.1.min.js"></script>
-	<script type="text/javascript" src="angularjs/1.0.5/angular.min.js"></script>
-
-	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    
     <!-- Load the QR encoder for this view
          This encoder uses some specifically identified elements
          to generate the QR code:
          - a div with id "qrdiv" that contains the canvas to draw to.
            This div may be used for layouting purposes.
-         - a canvas with id "qrcanv" 
-         - a div with id "contentcontainer" that represents the page content. 
+         - a canvas with id "qrcanv"
+         - a div with id "contentcontainer" that represents the page content.
            This is used to calculate the size of the QR code. -->
-	<script src="js/qrenc-quirli.js"></script> 
-
-	<!-- Load the qr angular controller.-->
-	<script src="js/qrcontroller.js"></script>
-
-	<!-- Load the presenter code for this view -->
-	<script src="js/qrpresenter.js"></script>
-
-	</body>
+    <script src="js/qrenc-quirli.js"></script>
+    <!-- Load the qr angular controller.-->
+    <script src="js/qrcontroller.js"></script>
+    <!-- Load the presenter code for this view -->
+    <script src="js/qrpresenter.js"></script>
+</body>
 </html>

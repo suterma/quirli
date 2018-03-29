@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <!--
     quirli, replay with ease.
-    Copyright (C) 2012 by marcel suter, marcel@codeministry.ch
+    Copyright (C) 2012-2018 by marcel suter, marcel@codeministry.ch
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -63,68 +63,66 @@
 
     <!-- The JSONP loader library (by www.nonobtrusive.com)-->
     <script src="lightweightjsonp/jsonp.js"></script>
-</head>	
-	<body>
-		<div class="navbar navbar-inverse navbar-fixed-top">
-		      <div class="navbar-inner">
-		        <div class="container">
-		          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-		            <span class="icon-bar"></span>
-		            <span class="icon-bar"></span>
-		            <span class="icon-bar"></span>
-		          </a>
-		          <a class="brand" href="index.html">quirli <img src = "img/quirli_app_icon_16x16.png"/>&nbsp;<span class="label label-important">Beta</span></a>
-		          <div class="nav-collapse collapse">
-		            <ul class="nav">
-		            </ul>
-		          </div><!--/.nav-collapse -->
-		    	</div>
-			</div>
-		</div>
-		<div class="container" ng-controller="playlistcontroller">
-	        <!--Error notification-->
-		    <div id="errordisplay">
-			    <div class="alert alert-error">
-			    <h4 class="alert-heading">Please enable JavaScript to use quirli.</h4>
-			    </div>
-		    </div>
-		    <div id="progressdisplay">
-			    <div class="alert">
-			    <h4 class="alert-heading">Loading...</h4>
-			    </div>
-		    </div>
-            <h1>{{title}}</h1>
-
-            <!--Unfortunately, bootstrap-style tooltips do not work for the repeated links-->
-			<div id="tracksdisplay">
-                <p style="line-height:2.6em" >
-					<span ng-repeat="track in tracks">
-                        <a href="#" title="Loads the track &quot;{{track.title}}&quot; into the player" data-placement="top" data-toggle="tooltip" data-original-title="Loads the track &quot;{{track.title}}&quot; into the player" class="btn btn-primary" ng-click="loadTrack(track.url)"><i class="icon-play-circle icon-white"></i>&nbsp;&nbsp;<!-- spaces for nicer display -->{{track.title}}&nbsp;</a>&nbsp;
-                        <br />
-					</span>
-                    </p>
-			</div>
-
-        </div> <!-- /container -->
-
-        <!-- Footer
-        ================================================== -->
-        <footer class="footer">
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
             <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <a class="brand" href="index.html">quirli <img src="img/quirli_app_icon_16x16.png" />&nbsp;<span class="label label-important">Beta</span></a>
+                <div class="nav-collapse collapse">
+                    <ul class="nav"></ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </div>
+    </div>
+    <div class="container" ng-controller="playlistcontroller">
+        <!--Error notification-->
+        <div id="errordisplay">
+            <div class="alert alert-error">
+                <h4 class="alert-heading">Please enable JavaScript to use quirli.</h4>
+            </div>
+        </div>
+        <div id="progressdisplay">
+            <div class="alert">
+                <h4 class="alert-heading">Loading...</h4>
+            </div>
+        </div>
+        <h1>{{title}}</h1>
+
+        <!--Unfortunately, bootstrap-style tooltips do not work for the repeated links-->
+        <div id="tracksdisplay">
+            <p style="line-height:2.6em">
+                <span ng-repeat="track in tracks">
+                    <a href="#" title="Loads the track &quot;{{track.title}}&quot; into the player" data-placement="top" data-toggle="tooltip" data-original-title="Loads the track &quot;{{track.title}}&quot; into the player" class="btn btn-primary" ng-click="loadTrack(track.url)"><i class="icon-play-circle icon-white"></i>&nbsp;&nbsp;<!-- spaces for nicer display -->{{track.title}}&nbsp;</a>&nbsp;
+                    <br />
+                </span>
+            </p>
+        </div>
+
+    </div> <!-- /container -->
+    <!-- Footer
+    ================================================== -->
+    <footer class="footer">
+        <div class="container">
             <p class="pull-right"><a href="#">Back to top</a></p>
             <p>Created by <a href="http://www.codeministry.ch">codeministry.ch</a>.</p>
-            <p>Licensed under the open source <a href ="gpl-3.0.txt" >GPLv3 License</a>.</p>
+            <p>Licensed under the open source <a href="gpl-3.0.txt">GPLv3 License</a>.</p>
             <ul class="footer-links">
                 <li><a href="http://quirli.codeplex.com">Source</a></li>
                 <li class="muted">&middot;</li>
                 <li><a href="disclaimer.txt">Disclaimer</a></li>
             </ul>
-            </div>
-        </footer>
-		    
-		<!-- Le javascript
-	    ================================================== -->
-	    <!-- Placed at the end of the document so the pages load faster -->
-	    <script src="bootstrap/js/bootstrap.min.js"></script>	
-	</body>	
+        </div>
+    </footer>
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+</body>
 </html>

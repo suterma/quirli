@@ -1,7 +1,7 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--
     quirli, replay with ease.
-    Copyright (C) 2012 by marcel suter, marcel@codeministry.ch
+    Copyright (C) 2012-2018 by marcel suter, marcel@codeministry.ch
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
     This is a test page for embedding the embeddable qr code generator
 -->
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -34,7 +33,6 @@
     <meta name="geo.country" content="CH" />
     <meta name="description" content="Media player for replay and rehearsal with cues, featuring QR codes.">
     <meta name="author" content="codeministry.ch">
-
     <!-- Le styles -->
     <!-- Note: Bootstrap is not officially hosted on a CDN, so we host that ourselves for now-->
     <link href="bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -44,7 +42,6 @@
     <link href="bootstrap-3.3.7/css/quirli-template.css" rel="stylesheet">
     <!-- Le fav and touch icons -->
     <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-
     <!--
     Because there is no official apple support right now, we omit these apple specific things
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
@@ -52,19 +49,18 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png"> -->
 </head>
-
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-                    aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-                <a class="navbar-brand" href="index.html">quirli <img src="img/quirli_app_icon_16x16.png"/></a>
+                        aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">quirli <img src="img/quirli_app_icon_16x16.png" /></a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
@@ -74,11 +70,9 @@
             <!--/.nav-collapse -->
         </div>
     </nav>
-
     <div id="contentcontainer" class="container" ng-controller="qrController">
         <h1>An embedded QR code generator with text input.</h1>
-        <iframe src="qr.frameable.inline.html?text=test" style="border:none;" width="100%" min-height="300vh" height="400px"
-        />
+        <iframe src="qr.frameable.inline.html?text=test" style="border:none;" width="100%" min-height="300vh" height="400px" />
     </div>
     <!-- /container -->
     <!-- Footer
@@ -88,23 +82,20 @@
         <div class="container">
             <p class="pull-right"><a href="#">Back to top</a></p>
             <p>Created by <a href="mailto:marcel@codeministry.ch">marcel@codeministry.ch</a>. Hosted at <a href="http://cyon.ch">cyon.ch</a>.
-                <p>Licensed under the open source <a href="gpl-3.0.txt">GPLv3 License</a>.</p>
-                <ul class="footer-links">
-                    <li><a href="https://github.com/suterma/quirli">Source</a></li>
-                    <li class="muted">&middot;</li>
-                    <li><a href="disclaimer.txt">Disclaimer</a></li>
-                </ul>
+            <p>Licensed under the open source <a href="gpl-3.0.txt">GPLv3 License</a>.</p>
+            <ul class="footer-links">
+                <li><a href="https://github.com/suterma/quirli">Source</a></li>
+                <li class="muted">&middot;</li>
+                <li><a href="disclaimer.txt">Disclaimer</a></li>
+            </ul>
         </div>
     </footer>
-
     <!-- Le javascript
-	================================================== -->
+    ================================================== -->
     <!-- Loading from own server to avoid dependency on other resources. This also simplifies offline usage-->
     <script type="text/javascript" src="jquery/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="angularjs/1.0.5/angular.min.js"></script>
-
     <!-- Placed at the end of the document so the pages load faster-->
     <script src="bootstrap-3.3.7/js/bootstrap.min.js"></script>
 </body>
-
 </html>

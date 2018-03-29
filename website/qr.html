@@ -1,7 +1,7 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--
     quirli, replay with ease.
-    Copyright (C) 2012 by marcel suter, marcel@codeministry.ch
+    Copyright (C) 2012-2018 by marcel suter, marcel@codeministry.ch
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,7 +17,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <html ng-app="qr" lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,7 +30,6 @@
     <meta name="geo.country" content="CH" />
     <meta name="description" content="Media player for replay and rehearsal with cues, featuring QR codes.">
     <meta name="author" content="codeministry.ch">
-
     <!-- Le styles -->
     <!-- Note: Bootstrap is not officially hosted on a CDN, so we host that ourselves for now-->
     <link href="bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -41,7 +39,6 @@
     <link href="bootstrap-3.3.7/css/quirli-template.css" rel="stylesheet">
     <!-- Le fav and touch icons -->
     <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-
     <!--
     Because there is no official apple support right now, we omit these apple specific things
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
@@ -49,19 +46,18 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png"> -->
 </head>
-
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-                    aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-                <a class="navbar-brand" href="index.html">quirli <img src="img/quirli_app_icon_16x16.png"/></a>
+                        aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">quirli <img src="img/quirli_app_icon_16x16.png" /></a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
@@ -84,116 +80,101 @@
         </div>
         <script type="text/javascript">
             //Just remove the alert about missing javascript
-              var element = document.getElementById("pleaseenablejavascript");
-              element.parentNode.removeChild(element);
+            var element = document.getElementById("pleaseenablejavascript");
+            element.parentNode.removeChild(element);
         </script>
         <!-- /.modal -->
-
         <div id="loadingdisplay">
             <div class="modal-backdrop in"></div>
             <!--Loading notification. A modal dialog, without dialog box, that gets dismissed after document ready-->
             <div class="modal in" tabindex="-1" role="dialog" style="display: block;">
                 <!-- margin-top of 25% has been proven empirically to be best for this layout -->
                 <div class="modal-dialog modal-sm center-block" role="document" style="margin-top: 25%; margin-bottom: auto; height: 32px; width:32px">
-                    <img class="spinning" src="https://github.com/iconic/open-iconic/raw/master/png/loop-circular-4x.png" style="height: 32px; width:32px"
-                    />
+                    <img class="spinning" src="https://github.com/iconic/open-iconic/raw/master/png/loop-circular-4x.png" style="height: 32px; width:32px" />
                 </div>
             </div>
         </div>
-
         <!--Error notification-->
         <div id="errordisplay" style="display: none">
             <div class="alert alert-danger">
                 <div id="errortext"></div>
             </div>
         </div>
-
         <div id="coreui">
             <!-- The core UI -->
             <h1>Generate QR code</h1>
-
             <form class="row" name="qrinp">
                 <div class="col-lg-8">
                     <div class="input-group">
                         <label for="sourceurl" class="input-group-addon">Content</label>
                         <input ng-model="QrText" ng-readonly="QrTextReadonly" class="form-control" type="text" id="sourceurl" autocomplete="on" placeholder="Enter an URL or text"
-                            name="sourceurl" onpaste="doqr();" oninput="doqr();" title="Define the URL or text to generate a QR code for."
-                        />
+                               name="sourceurl" onpaste="doqr();" oninput="doqr();" title="Define the URL or text to generate a QR code for." />
                     </div>
                 </div>
-
                 <div class="col-lg-2">
                     <div class="input-group">
                         <label for="eccLevelSelector" class="input-group-addon">Level</label>
                         <select ng-model="EccLevel" id="eccLevelSelector" class="form-control" name="ECC" onchange="doqr();" title="The level of the redundancy for the error correction. A higher level means more redundancy and more robustness, but also a more complex QR code.">
-                        <option value="1" >L (dense)</option>
-                        <option value="2" >M</option>
-                        <option value="3" >Q</option>
-                        <option value="4" >H (rugged)</option>
-                    </select>
+                            <option value="1">L (dense)</option>
+                            <option value="2">M</option>
+                            <option value="3">Q</option>
+                            <option value="4">H (rugged)</option>
+                        </select>
                     </div>
                 </div>
-
                 <div class="col-lg-2">
                     <div class="input-group">
                         <label for="qrSizeSelector" class="input-group-addon">Size</label>
                         <select ng-model="QrSizeDivider" id="qrSizeSelector" class="form-control" name="QrSizeDivider" onchange="setupqr();doqr();"
-                            title="The display size of the QR code. Large means full window size.">
-                        <option value="4" >Small</option>
-                        <option value="2" >Medium</option>
-                        <option value="1" >Large</option>
-                    </select>
+                                title="The display size of the QR code. Large means full window size.">
+                            <option value="4">Small</option>
+                            <option value="2">Medium</option>
+                            <option value="1">Large</option>
+                        </select>
                     </div>
                 </div>
             </form>
-
             <div id="qrdiv" class="center-block" style="background: white;">
                 <canvas id="qrcanv">No Canvas Support?
-				</div>
-
-      </div> <!-- The core UI -->
-
+            </div>
+        </div> <!-- The core UI -->
     </div> <!-- /container -->
     <!-- Footer
     ================================================== -->
     <footer class="footer">
         <div class="container">
-        <p class="pull-right"><a href="#">Back to top</a></p>
-        <p>Created by <a href="mailto:marcel@codeministry.ch">marcel@codeministry.ch</a>.
-          Hosted at <a href="http://cyon.ch">cyon.ch</a>.
-        <p>Licensed under the open source <a href ="gpl-3.0.txt" >GPLv3 License</a>.</p>
-        <ul class="footer-links">
-            <li><a href="https://github.com/suterma/quirli">Source</a></li>
-            <li class="muted">&middot;</li>
-            <li><a href="disclaimer.txt">Disclaimer</a></li>
-        </ul>
+            <p class="pull-right"><a href="#">Back to top</a></p>
+            <p>
+                Created by <a href="mailto:marcel@codeministry.ch">marcel@codeministry.ch</a>.
+                Hosted at <a href="http://cyon.ch">cyon.ch</a>.
+            <p>Licensed under the open source <a href="gpl-3.0.txt">GPLv3 License</a>.</p>
+            <ul class="footer-links">
+                <li><a href="https://github.com/suterma/quirli">Source</a></li>
+                <li class="muted">&middot;</li>
+                <li><a href="disclaimer.txt">Disclaimer</a></li>
+            </ul>
         </div>
     </footer>
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Loading from own server to avoid dependency on other resources. This also simplifies offline usage-->
+    <script type="text/javascript" src="jquery/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="angularjs/1.0.5/angular.min.js"></script>
+    <!-- Placed at the end of the document so the pages load faster-->
+    <script src="bootstrap-3.3.7/js/bootstrap.min.js"></script>
 
-	<!-- Le javascript
-	================================================== -->
-	<!-- Loading from own server to avoid dependency on other resources. This also simplifies offline usage-->
-	<script type="text/javascript" src="jquery/jquery-3.1.1.min.js"></script>
-	<script type="text/javascript" src="angularjs/1.0.5/angular.min.js"></script>
-
-	<!-- Placed at the end of the document so the pages load faster-->
-	<script src="bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    
     <!-- Load the QR encoder for this view
          This encoder uses some specifically identified elements
          to generate the QR code:
          - a div with id "qrdiv" that contains the canvas to draw to.
            This div may be used for layouting purposes.
-         - a canvas with id "qrcanv" 
-         - a div with id "contentcontainer" that represents the page content. 
+         - a canvas with id "qrcanv"
+         - a div with id "contentcontainer" that represents the page content.
            This is used to calculate the size of the QR code. -->
-	<script src="js/qrenc-quirli.js"></script> 
-
-	<!-- Load the qr angular controller.-->
-	<script src="js/qrcontroller.js"></script> 
-
-	<!-- Load the presenter code for this view -->
-	<script src="js/qrpresenter.js"></script> 
-
-	</body>
+    <script src="js/qrenc-quirli.js"></script>
+    <!-- Load the qr angular controller.-->
+    <script src="js/qrcontroller.js"></script>
+    <!-- Load the presenter code for this view -->
+    <script src="js/qrpresenter.js"></script>
+</body>
 </html>
