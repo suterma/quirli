@@ -29,6 +29,7 @@ $(document).ready(function() {
     $("[rel=tooltip]").tooltip();
     $("#playercontrols").hide(); //initially, there is no media to control for playing
     $("#progressdisplay").hide(); //document is ready now
+    $("#errordisplay").hide(); //document is ready now
 
     //Specially handle the enter key on the url entry field, to actually change the model on enter key
     $("#sourceurl").keyup(function(event) {
