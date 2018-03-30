@@ -2,3 +2,6 @@ website/.vs/slnx.sqlite
 *.sqlite-journal
 *.suo
 website/.vs/VSWorkspaceState.json
+.vs/VSWorkspaceState.json
+.vs/slnx.sqlite
+.vs/config/applicationhost.config

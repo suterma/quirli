@@ -44,7 +44,7 @@ $(document).ready(function() {
 function onMediaelementPlayerReady(mediaelementplayer) {
     mediaelementplayer.load();
     defineMediaPlayerHandling(mediaelementplayer, globalScope);
-    globalScope.PlaybackType = mediaelementplayer.pluginType;
+    globalScope.PlaybackType = mediaelementplayer.rendererName;
     globalScope.$apply();
 }
 
@@ -80,7 +80,7 @@ function removeErrors(errortext) {
 
 //loads the content of the specified url into a new, matching media player
 //later, instead of interpreting the url, actually request the file
-function loadUrl(objectURL) {
+function loadMediaUrl(objectURL) {
     if ((objectURL === null) || (objectURL === '')) {
         return false; //nothing to load at all
     }
@@ -88,11 +88,7 @@ function loadUrl(objectURL) {
     removeErrors();
 
     //determine media type and handle accordingly
-    if (objectURL.indexOf("http://www.youtube.com/watch?v=") !== -1) { //contains the usual youtube prefix
-        createPlayerAndLoadSource(objectURL, "youtube");
-    } else if (objectURL.indexOf("https://www.youtube.com/watch?v=") !== -1) { //contains the usual HTTPS youtube prefix
-        createPlayerAndLoadSource(objectURL, "youtube");
-    } else if (objectURL.substr(objectURL.length - 4) === ".wav") {
+    if (objectURL.substr(objectURL.length - 4) === ".wav") {
         createPlayerAndLoadSource(objectURL, "audio");
     } else if (objectURL.substr(objectURL.length - 4) === ".mp3") {
         createPlayerAndLoadSource(objectURL, "audio");
@@ -104,7 +100,7 @@ function loadUrl(objectURL) {
         createPlayerAndLoadSource(objectURL, "video");
     } else if (objectURL.substr(objectURL.length - 4) === ".mp4") {
         createPlayerAndLoadSource(objectURL, "video");
-    } else { //we dont know, just assume video, because video generally also can play audio
+    } else { //we dont know or it is from a content provider like youtube or vimeo: Just assume video, because video generally also can play audio
         createPlayerAndLoadSource(objectURL, "video");
     }
 }
@@ -116,32 +112,15 @@ function createPlayerAndLoadSource(objectURL, sourceType) {
     quirliControlType = sourceType;
 
     //TODO probably we can simplyfiy this if case
-    if (quirliControlType === "video") {
-        $("#quirliplayer").append("<video controls src=" + objectURL + "></video>");
-        var mediaelementplayer = new MediaElementPlayer($('video'), {
-            defaultVideoWidth: '100%',
-            videoWidth: '100%',
-            pluginWidth: '100%',
-            alwaysShowControls: false, //dunno what this actually does. Setting to false does not seem to change anything
-            // enables Flash and Silverlight to resize to content size
-            enableAutosize: true,
-            // the order of controls you want on the control bar (and other plugins below)
-            features: ['playpause', 'progress', 'current', 'duration', 'tracks', 'volume', 'fullscreen'],
-            // when this player starts, it will pause other players
-            pauseOtherPlayers: true,
-            success: function(mediaelementplayer) {
-                onMediaelementPlayerReady.apply(this, arguments)
-            },
-            error: function(mediaElement) {
-                console.log('medialement problem is detected: %o', mediaElement);
-            }
-        });
-    }
     if (quirliControlType === "audio") {
-        $("#quirliplayer").append("<audio controls src=" + objectURL + "></audio>");
-        var mediaelementplayer = new MediaElementPlayer($('audio'), {
+        //The way to handle the video element is taken from the mediaelement.js demo and docs
+        var audio = document.createElement('audio');
+        audio.controls = true;
+        audio.src = objectURL;
+        audio.preload = true;
+       $("#quirliplayer").append(audio);
+        var mediaelementplayer = new MediaElementPlayer(audio, {
             alwaysShowControls: true,
-            // enables Flash and Silverlight to resize to content size
             enableAutosize: true,
             // width of audio player
             audioWidth: '100%',
@@ -158,10 +137,16 @@ function createPlayerAndLoadSource(objectURL, sourceType) {
         });
 
     }
-
-    if (quirliControlType === "youtube") {
-        $("#quirliplayer").append("<video controls width='640' height='360'>    <source type='video/youtube' src='" + objectURL + "' /></video>");
-        var mediaelementplayer = new MediaElementPlayer($('video'), {
+    if (quirliControlType === "video") {
+        //The way to handle the video element is taken from the mediaelement.js demo and docs
+        var video = document.createElement('video');
+        video.width = "640";
+        video.height = "360";
+        video.controls = true;
+        video.src = objectURL;
+        //video.preload = true;
+        $("#quirliplayer").append(video);
+        var mediaelementplayer = new MediaElementPlayer(video, {
             defaultVideoWidth: 640,
             defaultVideoHeight: 360,
             videoWidth: 640,

@@ -58,9 +58,13 @@
     <!--//TODO try latest angularjs-->
     <!--<script type="text/javascript" src="angular-1.6.9/angular.js"></script>-->
     <!-- Mediaelement by John Dyer 	-->
-    <!-- Already specified copy of JQuery is used instead of the mediaelement one.-->
-    <script src="mediaelement/mediaelement-and-player.min.js"></script>
-    <link rel="stylesheet" href="mediaelement/mediaelementplayer.min.css" />
+    <link rel="stylesheet" href="mediaelement-4.2.9/mediaelementplayer.css" />
+    <script src="mediaelement-4.2.9/mediaelement-and-player.js"></script>
+    <script src="mediaelement-4.2.9/renderers/dailymotion.js"></script>
+    <script src="mediaelement-4.2.9/renderers/facebook.js"></script>
+    <script src="mediaelement-4.2.9/renderers/soundcloud.js"></script>
+    <script src="mediaelement-4.2.9/renderers/twitch.js"></script>
+    <script src="mediaelement-4.2.9/renderers/vimeo.js"></script>
 
     <!-- Load the track angular controller.-->
     <script src="js/playercontroller.js"></script>
@@ -129,7 +133,7 @@
             <!-- The core UI -->
             <div id="mediainput">
                 <p ng-show="ViewStyle == 'edit'">
-                    <input ng-model="MediaUrl" class="input-xxlarge" type="text" id="sourceurl" onblur="loadUrl('{{MediaUrl}}')" autocomplete="on" placeholder="Enter URL to media file or YouTube video" name="sourceurl" />
+                    <input ng-model="MediaUrl" class="input-xxlarge" type="text" id="sourceurl" onblur="loadMediaUrl('{{MediaUrl}}')" autocomplete="on" placeholder="Enter URL to media file or YouTube video" name="sourceurl" />
                     <i class="icon-question-sign" rel="tooltip" title="Define the media file that quirli will work on."></i>
                     <strong><span id="sourceUrlDisplay">{{MediaUrl}}</span></strong>
                 </p>

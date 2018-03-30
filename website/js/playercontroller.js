@@ -202,7 +202,7 @@ function parseQueryParameter($scope) {
     else {
         $scope.ViewStyle = "edit"; //to encourage adding cues
     }
-    loadUrl(mediaUrl); //TODO later decouple this presenter method from here and use a watch with comparing to the current value to avoid flickering on textbox blur
+    loadMediaUrl(mediaUrl); //TODO later decouple this presenter method from here and use a watch with comparing to the current value to avoid flickering on textbox blur
 }
 
 //---Helpers
