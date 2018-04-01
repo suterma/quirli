@@ -28,4 +28,5 @@ $(document).ready(function () {
     $("#coreui").show(); //to signal working javascript to the user		
     $("[rel=tooltip]").tooltip();
     $("#progressdisplay").hide(); //document is ready now
+    $("#errordisplay").hide(); //document is ready now
 });
