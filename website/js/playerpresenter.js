@@ -27,7 +27,6 @@ $(document).ready(function() {
     $("#loadingdisplay").hide(); //to signal working javascript to the user
     $("#coreui").show(); //to signal working javascript to the user		
     $("[rel=tooltip]").tooltip();
-    $("#playercontrols").hide(); //initially, there is no media to control for playing
     $("#progressdisplay").hide(); //document is ready now
     $("#errordisplay").hide(); //document is ready now
 
@@ -78,32 +77,7 @@ function removeErrors(errortext) {
 
 
 
-//loads the content of the specified url into a new, matching media player
-//later, instead of interpreting the url, actually request the file
-function loadMediaUrl(objectURL) {
-    if ((objectURL === null) || (objectURL === '')) {
-        return false; //nothing to load at all
-    }
-    //TODO later check the existence of the referenced file first, to create a better user experience
-    removeErrors();
 
-    //determine media type and handle accordingly
-    if (objectURL.substr(objectURL.length - 4) === ".wav") {
-        createPlayerAndLoadSource(objectURL, "audio");
-    } else if (objectURL.substr(objectURL.length - 4) === ".mp3") {
-        createPlayerAndLoadSource(objectURL, "audio");
-    } else if (objectURL.substr(objectURL.length - 4) === ".ogv") {
-        createPlayerAndLoadSource(objectURL, "video");
-    } else if (objectURL.substr(objectURL.length - 4) === ".wmv") {
-        createPlayerAndLoadSource(objectURL, "video");
-    } else if (objectURL.substr(objectURL.length - 5) === ".webm") {
-        createPlayerAndLoadSource(objectURL, "video");
-    } else if (objectURL.substr(objectURL.length - 4) === ".mp4") {
-        createPlayerAndLoadSource(objectURL, "video");
-    } else { //we dont know or it is from a content provider like youtube or vimeo: Just assume video, because video generally also can play audio
-        createPlayerAndLoadSource(objectURL, "video");
-    }
-}
 
 //creates a suitable player, sets the source of the matching media player control, and defines the action handlers.
 //this works for real url's only, not for url object of local files (unfortunately these object urls seem to become invalid at the call to this method)

@@ -116,7 +116,6 @@ function playerController($scope, $location) {
 
     $scope.setViewStyle = function (style) {
         $scope.ViewStyle = style;
-        $scope.$apply();
     }
 
 
@@ -143,6 +142,34 @@ function playerController($scope, $location) {
         //TODO instead of saving diretcly to items, provide as model property
         $("#savelinkInBox").val(linkUrl);
         $("#savelinkToLoad").attr("href", linkUrl);
+    }
+
+    //loads the content of the specified url into a new, matching media player
+    //later, instead of interpreting the url, actually request the file
+    $scope.loadMediaUrl = function () {
+        var objectURL = $scope.MediaUrl;
+        if ((objectURL === null) || (objectURL === '')) {
+            return false; //nothing to load at all
+        }
+        //TODO later check the existence of the referenced file first, to create a better user experience
+        removeErrors();
+
+        //determine media type and handle accordingly
+        if (objectURL.substr(objectURL.length - 4) === ".wav") {
+            createPlayerAndLoadSource(objectURL, "audio");
+        } else if (objectURL.substr(objectURL.length - 4) === ".mp3") {
+            createPlayerAndLoadSource(objectURL, "audio");
+        } else if (objectURL.substr(objectURL.length - 4) === ".ogv") {
+            createPlayerAndLoadSource(objectURL, "video");
+        } else if (objectURL.substr(objectURL.length - 4) === ".wmv") {
+            createPlayerAndLoadSource(objectURL, "video");
+        } else if (objectURL.substr(objectURL.length - 5) === ".webm") {
+            createPlayerAndLoadSource(objectURL, "video");
+        } else if (objectURL.substr(objectURL.length - 4) === ".mp4") {
+            createPlayerAndLoadSource(objectURL, "video");
+        } else { //we dont know or it is from a content provider like youtube or vimeo: Just assume video, because video generally also can play audio
+            createPlayerAndLoadSource(objectURL, "video");
+        }
     }
 
     //preload this scope from the url query when available
@@ -202,7 +229,7 @@ function parseQueryParameter($scope) {
     else {
         $scope.ViewStyle = "edit"; //to encourage adding cues
     }
-    loadMediaUrl(mediaUrl); //TODO later decouple this presenter method from here and use a watch with comparing to the current value to avoid flickering on textbox blur
+    $scope.loadMediaUrl(mediaUrl); //TODO later decouple this presenter method from here and use a watch with comparing to the current value to avoid flickering on textbox blur
 }
 
 //---Helpers
