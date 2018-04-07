@@ -44,7 +44,6 @@ function onMediaelementPlayerReady(mediaelementplayer) {
     mediaelementplayer.load();
     defineMediaPlayerHandling(mediaelementplayer, globalScope);
     globalScope.PlaybackType = mediaelementplayer.rendererName;
-    globalScope.$apply();
 }
 
 

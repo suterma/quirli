@@ -20,8 +20,8 @@
  * Controller for the player, using AngularJS.
  */
 
-
-//Directive that allows to set focus with an attribute with name "focus" when set to true
+//Define the module for this app
+//Add directive that allows to set focus with an attribute with name "focus" when set to true
 var quirliApp = angular.module('quirli', []).directive('focus', function () {
     return function (scope, element, attrs) {
         attrs.$observe('focus', function (newValue) {
@@ -31,8 +31,8 @@ var quirliApp = angular.module('quirli', []).directive('focus', function () {
 });
 
 
-
-function playerController($scope, $location) {
+//Create the controller
+var playerController = function($scope, $location) {
     
     globalScope = $scope; //TODO to give easy access, but later rework to fit the angular style
     
@@ -177,6 +177,10 @@ function playerController($scope, $location) {
     parseQueryParameter($scope);
 }
 
+//Register controller with module
+quirliApp.controller("playerController", playerController);
+
+//TODO move into the controller
 //parses the query parameter and preloads the model with it's data
 function parseQueryParameter($scope) {
     //TODO later use the $location from the scope to get the url, to comply with angular style
