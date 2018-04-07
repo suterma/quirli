@@ -131,7 +131,8 @@ var playerController = function($scope, $location) {
         var serializedCues = cues.join('&');
 
         //serialize the media file url
-        var pageUrl = window.location.href.split('?')[0]; //get the url without the (probably already existing) query part
+        var pageUrlWithoutQuery = window.location.href.split('?')[0]; //get the url without the (probably already existing) query part
+        pageUrl = pageUrlWithoutQuery.split('#')[0]; //get the url without the (probably already existing) fragment part
 
         //provide the link url
         var linkUrl = pageUrl + "?media=" + encodeURIComponent($scope.MediaUrl) +
@@ -184,7 +185,8 @@ quirliApp.controller("playerController", playerController);
 //parses the query parameter and preloads the model with it's data
 function parseQueryParameter($scope) {
     //TODO later use the $location from the scope to get the url, to comply with angular style
-    var url = window.location.href;
+    var windowUrl = window.location.href;
+    url = windowUrl.split('#')[0]; //get the url without the (probably existing) fragment part
 
     //Load track from parameters		
     var mediaUrl = decodeURIComponent(gup(url, 'media'));
