@@ -67,16 +67,15 @@
     <!--<script src="mediaelement-4.2.9/renderers/twitch.js"></script>-->
     <script src="mediaelement-4.2.9/renderers/vimeo.js"></script>
 
-    <!-- Load the track angular controller.-->
+    <!-- Load the player angular controller.-->
     <script src="js/playercontroller.js"></script>
+    <!-- Load the presenter code for this view -->
+    <script src="js/playerpresenter.js"></script>
 
     <!-- Load the playlist angular controller.
     <script src="js/playlistcontroller.js"></script>-->
     <!-- Load the keyboard angular controller.
      <script src="js/keyboardcontroller.js"></script>-->
-    <!-- Load the presenter code for this view -->
-    <script src="js/playerpresenter.js"></script>
-
     <!-- The JSONP loader library (by www.nonobtrusive.com)-->
     <script src="lightweightjsonp/jsonp.js"></script>
 </head>
@@ -147,16 +146,16 @@
             </div>
 
             <!--experimental
-    <p ng-show="(Debug.lenght)">
-    <span class="badge-important">Debug info</span>
-    Full url: {{location.absUrl()}}
-    </p>-->
+            <p ng-show="(Debug.lenght)">
+            <span class="badge-important">Debug info</span>
+            Full url: {{location.absUrl()}}
+            </p>-->
             <!--experimental
-    <div id="keyboardecho">
-    <canvas id="example" width="200" height="200">
-    This text is displayed if your browser does not support HTML5 Canvas.
-    </canvas>
-    </div>-->
+            <div id="keyboardecho">
+            <canvas id="example" width="200" height="200">
+            This text is displayed if your browser does not support HTML5 Canvas.
+            </canvas>
+            </div>-->
             <!--experimental-->
             <p>
                 <strong>{{TrackTitle}}</strong><span ng-show="(ArtistName.length)"> by </span><!--Show only when there is an artist mentioned--><strong>{{ArtistName}}</strong><span ng-show="(AlbumName.length)"> on </span><!--Show only when there is an album mentioned--><strong>{{AlbumName}}</strong>
@@ -179,11 +178,11 @@
                         <i class="icon-question-sign" rel="tooltip" title="Review the media in the player. At the desired positions press [Take cue here!] to create a cue point"></i>
 
                         <!--
-                 <input type="button" class="btn btn-inverse" value="Volume +"	ng-click="doIncreaseVolume()" />
-                <input type="button" class="btn btn-inverse" value="Volume -" 	ng-click="doDecreaseVolume()" />
-                <input type="button" class="btn btn-inverse" value="Load"		ng-click="loadCues()" />
-                <input type="button" class="btn btn-inverse" value="Save" 		ng-click="saveCues()" />
-                 -->
+                         <input type="button" class="btn btn-inverse" value="Volume +"	ng-click="doIncreaseVolume()" />
+                        <input type="button" class="btn btn-inverse" value="Volume -" 	ng-click="doDecreaseVolume()" />
+                        <input type="button" class="btn btn-inverse" value="Load"		ng-click="loadCues()" />
+                        <input type="button" class="btn btn-inverse" value="Save" 		ng-click="saveCues()" />
+                         -->
                     </form>
                 </div>
             </div>
@@ -209,11 +208,11 @@
                                     </button>
 
                                     <!-- recycling with an archive, as alternative. Not used for now
-                            The label "for" identifier and the input "id" identifier must be unique among other items and equal to each other
-                            <span class="badge" id="trashcan"><i class="icon-trash" rel="tooltip" title="Removes this cue." ng-model="cue.recycle"></i></span>
-                            <label for="checkbox{{cue.position}}"><i
-                                class="icon-trash" rel="tooltip" title="Removes this cue."></i></label>
-                            <input type="checkbox" id="checkbox1" name="checkbox{{cue.position}}" ng-model="cue.recycle" />-->
+                                    The label "for" identifier and the input "id" identifier must be unique among other items and equal to each other
+                                    <span class="badge" id="trashcan"><i class="icon-trash" rel="tooltip" title="Removes this cue." ng-model="cue.recycle"></i></span>
+                                    <label for="checkbox{{cue.position}}"><i
+                                        class="icon-trash" rel="tooltip" title="Removes this cue."></i></label>
+                                    <input type="checkbox" id="checkbox1" name="checkbox{{cue.position}}" ng-model="cue.recycle" />-->
                                 </div>
                             </li>
                         </ul>
@@ -221,8 +220,8 @@
                     <div ng-show="ViewStyle == 'play'" id="cuedisplayplay">
                         <!-- cues view alternative, simple style -->
                         <!-- Not used right now, in favor of the simpler method below<ul class="unstyled">
-                    <li ng-repeat="cue in cues"><span class="form-inline">									<button class="btn btn-success" ng-click="playFromPosition(cue.position)">										<i class="icon-play" rel="tooltip"											title="Skips the media position to this cue."></i>&nbsp;&nbsp;{{cue.text}}&nbsp;									 </button>							</span></li>
-                </ul>-->
+                            <li ng-repeat="cue in cues"><span class="form-inline">									<button class="btn btn-success" ng-click="playFromPosition(cue.position)">										<i class="icon-play" rel="tooltip"											title="Skips the media position to this cue."></i>&nbsp;&nbsp;{{cue.text}}&nbsp;									 </button>							</span></li>
+                        </ul>-->
                 <p style="line-height:2.6em">
                     <span ng-repeat="cue in cues"><button class="btn btn-success" ng-click="playFromPosition(cue.position)"><i class="icon-play icon-white" rel="tooltip" title="Skips the media position to this cue."></i>&nbsp;&nbsp;<!-- spaces for nicer display -->{{cue.text}}&nbsp;</button>&nbsp;</span>
                 </p>
@@ -261,14 +260,13 @@
                 <a href="#" class="btn btn-inverse" data-dismiss="modal">Close</a>
             </div>
         </div>
-    </div>
-    <div class="alert alert-info">
-        Please give feedback to <a href="mailto:hello@quir.li">hello@quir.li</a>
-        <ul>
-            <li>Only working on latest browsers that support <a href="http://en.wikipedia.org/wiki/HTML5">HTML5</a>.</li>
-            <li>The used mediaplayer, <a href="http://mediaelementjs.com/">mediaelement.js</a> supports the various media types as stated on it's website.</li>
-        </ul>
-    </div>
+        <div class="alert alert-info">
+            Please give feedback to <a href="mailto:hello@quir.li">hello@quir.li</a>
+            <ul>
+                <li>Only working on latest browsers that support <a href="http://en.wikipedia.org/wiki/HTML5">HTML5</a>.</li>
+                <li>The used mediaplayer, <a href="http://mediaelementjs.com/">mediaelement.js</a> supports the various media types as stated on it's website.</li>
+            </ul>
+        </div>
     </div> <!-- /container -->
     <!-- Footer
     ================================================== -->
