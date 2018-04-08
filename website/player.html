@@ -79,27 +79,7 @@
     <!-- The JSONP loader library (by www.nonobtrusive.com)-->
     <script src="lightweightjsonp/jsonp.js"></script>
 </head>
-<body ng-controller="playerController">
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="navbar-inner">
-            <div class="container">
-                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </a>
-                <a class="brand" href="index.html">quirli <img src="img/quirli_app_icon_16x16.png" /></a>
-                <div class="nav-collapse collapse">
-                    <ul class="nav">
-                        <li class="divider-vertical"></li>
-                        <li><a ng-click="setViewStyle('edit')">Edit</a></li>
-                        <li><a ng-click="setViewStyle('play')">Play</a></li>
-                    </ul>
-                </div><!--/.nav-collapse -->
-            </div>
-        </div>
-    </div>
-
+<body>
     <!-- experimental
             <div class="container" ng-controller="keyboardController">
                                Button to trigger modal
@@ -114,8 +94,8 @@
     </div>
         </div>
                 </div>-->
-
-    <div class="container">
+    <!--player container-->
+    <div class="container" ng-controller="playerController">
         <!--Error notification-->
         <div id="errordisplay">
             <div class="alert alert-error">
@@ -159,10 +139,10 @@
             <!--experimental-->
             <p>
                 <strong>{{TrackTitle}}</strong><span ng-show="(ArtistName.length)"> by </span><!--Show only when there is an artist mentioned--><strong>{{ArtistName}}</strong><span ng-show="(AlbumName.length)"> on </span><!--Show only when there is an album mentioned--><strong>{{AlbumName}}</strong>
+                &nbsp;<span ng-show="ViewStyle == 'edit' && (PlaybackType.length)" class="badge">playback method: {{PlaybackType}}</span>
             </p>
             <div id="mediaplayer">
                 <!-- Media player -->
-                <p><span ng-show="ViewStyle == 'edit' && (PlaybackType.length)" class="badge">playback method: {{PlaybackType}}</span></p>
                 <div id="quirliplayer"></div>
                 <div id="playercontrols" ng-show="ViewStyle == 'edit' && (PlaybackType.length)">
                     <form ng-submit="addCueX()">
@@ -229,14 +209,16 @@
             </p>
         </div>
 
-        <div ng-show="ViewStyle == 'edit' && PlaybackType.length" id="persistenceoptions">
+        <p>
+            <button class="btn btn-inverse" ng-show="ViewStyle == 'play'" ng-click="setViewStyle('edit')">Edit</button>
+            <button class="btn btn-inverse" ng-show="ViewStyle == 'edit'" ng-click="setViewStyle('play')">Rehearse</button>
+
             <!-- Persistence -->
-            <p>
+            <span ng-show="PlaybackType.length">
                 <a class="btn btn-inverse" data-toggle="modal" href="#modalSaveAsLink" ng-click="SaveAsLink()">Share as link...</a>
                 <i class="icon-question-sign" rel="tooltip" title="Provides the track, consisting of media url and cues, as a reusable link."></i>
-            </p>
-        </div>
-
+            </span>
+        </p>
         <div class="modal hide" id="modalSaveAsLink">
             <!-- Save as link, modal variant-->
             <div class="modal-header">
@@ -267,7 +249,7 @@
                 <li>The used mediaplayer, <a href="http://mediaelementjs.com/">mediaelement.js</a> supports the various media types as stated on it's website.</li>
             </ul>
         </div>
-    </div> <!-- /container -->
+    </div> <!-- / player container -->
     <!-- Footer
     ================================================== -->
     <footer class="footer">
