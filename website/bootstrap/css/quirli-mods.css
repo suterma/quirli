@@ -46,18 +46,13 @@
             padding-left: 0;
         }
 
-/* To have the footer full-width also on smaller screens, compensate the body padding which is applied by bootstrap. */
-@media (max-width: 767px) {
-    .footer {
-        margin-right: -20px;
-        margin-left: -20px;
-    }
-
-        .footer .container {
-            margin-right: 20px;
-            margin-left: 20px;
-        }
+/* Full-widht footer */
+.footer {
+    position: fixed;
+    left: 0px;
+    right: 0px;
 }
+
 
 /*nicer blue for labels and badges that matches the blue primary buttons
 -------------------------------------------------- */
