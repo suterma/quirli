@@ -18,12 +18,6 @@
 
 /*Modifications that must get loaded before bootstrap.*/
 
-/* Content down-move to keep room for the top navbar
--------------------------------------------------- */
-body {
-    padding-top: 50px;
-}
-
 /*Disallow linebreaks sometimes
 -------------------------------------------------- */
 .nobr { 

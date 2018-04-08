@@ -18,6 +18,12 @@
 
 /*Modifications to bootstrap to make it more the way quirli should look like*/
 
+/* Content down-move to keep "air"
+-------------------------------------------------- */
+body {
+    padding-top: 20px;
+}
+
 /* Footer
 -------------------------------------------------- */
 
