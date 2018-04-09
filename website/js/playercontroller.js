@@ -32,10 +32,10 @@ var quirliApp = angular.module('quirli', []).directive('focus', function () {
 
 
 //Create the controller
-var playerController = function($scope, $location) {
-    
+var playerController = function ($scope, $location) {
+
     globalScope = $scope; //TODO to give easy access, but later rework to fit the angular style
-    
+
     //---Track adder field which are used when a new track is added
     $scope.ArtistName = "";
     $scope.AlbumName = "";
@@ -45,10 +45,11 @@ var playerController = function($scope, $location) {
     $scope.MediaUrl = "";
     $scope.PlaybackType = ""; //type of playback of the player: flash, native, silverlight or empty if no media loaded. Thus, this property can also be used to check whether a media was loaded by the player
     $scope.ViewStyle = "edit"; //can change to play later, but this is the default.
-     
+    $scope.IsMediaLoaded = false;
+
     //adds a new cue without denoting as the newest one
     $scope.addCue = function () {
-        $scope.cues.push({ text: $scope.text, position: $scope.position, recycle: false, isNewest:false, shortcut: '' }); //shortcut is not yet supported recycle is not yet used
+        $scope.cues.push({ text: $scope.text, position: $scope.position, recycle: false, isNewest: false, shortcut: '' }); //shortcut is not yet supported recycle is not yet used
 
         $scope.postAddTask();
     };
@@ -78,20 +79,12 @@ var playerController = function($scope, $location) {
         $scope.shortcut = '';
     };
 
-
-
-    $scope.remaining = function() {
-        var count = 0;
-        angular.forEach($scope.cues, function (cue) {
-            count += cue.recycle ? 0 : 1;
-        });
-        return count;
-    };
-     
-    $scope.archive = function() {
+    //removes any recycled cue from the cues collection
+    //as there is no "remove" in JavaScript for array, implemented by rebuilding the cues collection
+    $scope.archive = function () {
         var oldcues = $scope.cues;
         $scope.cues = [];
-        angular.forEach(oldcues, function(cue) {
+        angular.forEach(oldcues, function (cue) {
             if (!cue.recycle) $scope.cues.push(cue);
         });
     };
@@ -121,7 +114,7 @@ var playerController = function($scope, $location) {
 
     //creates an url of the current page, with parameters describing the media and cues
     //and presents that in a textbox for copying by the user
-    $scope.SaveAsLink = function() {
+    $scope.SaveAsLink = function () {
         var cues = [];
         $.each($scope.cues, function (index, item) {
             //alert(index + ': ' + value);

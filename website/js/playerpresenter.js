@@ -23,7 +23,7 @@
  */
 
 //visually initialize the page, including tooltips
-$(document).ready(function() {
+$(document).ready(function () {
     $("#loadingdisplay").hide(); //to signal working javascript to the user
     $("#coreui").show(); //to signal working javascript to the user		
     $("[rel=tooltip]").tooltip();
@@ -31,7 +31,7 @@ $(document).ready(function() {
     $("#errordisplay").hide(); //document is ready now
 
     //Specially handle the enter key on the url entry field, to actually change the model on enter key
-    $("#sourceurl").keyup(function(event) {
+    $("#sourceurl").keyup(function (event) {
         if (event.keyCode == 13) {
             $("#sourceurl").blur();
         }
@@ -91,7 +91,7 @@ function createPlayerAndLoadSource(objectURL, sourceType) {
         audio.controls = true;
         audio.src = objectURL;
         audio.preload = true;
-       $("#quirliplayer").append(audio);
+        $("#quirliplayer").append(audio);
         var mediaelementplayer = new MediaElementPlayer(audio, {
             alwaysShowControls: true,
             enableAutosize: true,
@@ -101,11 +101,13 @@ function createPlayerAndLoadSource(objectURL, sourceType) {
             features: ['playpause', 'progress', 'current', 'duration', 'tracks', 'volume', 'fullscreen'],
             // when this player starts, it will pause other players
             pauseOtherPlayers: true,
-            success: function(mediaelementplayer) {
+            success: function (mediaelementplayer) {
                 onMediaelementPlayerReady.apply(this, arguments)
+                globalScope.IsMediaLoaded = true;
             },
-            error: function(mediaElement) {
+            error: function (mediaElement) {
                 console.log('medialement problem is detected: %o', mediaElement);
+                globalScope.IsMediaLoaded = false;
             }
         });
 
@@ -131,11 +133,13 @@ function createPlayerAndLoadSource(objectURL, sourceType) {
             features: ['playpause', 'progress', 'current', 'duration', 'tracks', 'volume', 'fullscreen'],
             // when this player starts, it will pause other players
             pauseOtherPlayers: true,
-            success: function(mediaelementplayer) {
+            success: function (mediaelementplayer) {
                 onMediaelementPlayerReady.apply(this, arguments)
+                globalScope.IsMediaLoaded = true;
             },
-            error: function(mediaElement) {
+            error: function (mediaElement) {
                 console.log('medialement problem is detected: %o', mediaElement);
+                globalScope.IsMediaLoaded = false;
             }
         });
     }
@@ -153,33 +157,33 @@ function presentCue(caption, position) {
 
 //defines the concrete MediaelementJs player actions for the standardized do...Actions
 function defineMediaPlayerHandling(mediaPlayer, globalscope) {
-    globalscope.doPlay = function() {
+    globalscope.doPlay = function () {
         //The audio flash requires this check below, otherwise it plays more than once when clicked the play button repeatedly
         if (mediaPlayer.paused || mediaPlayer.ended) {
             mediaPlayer.play();
         }
     } //make sure we do not "play twice"
-    globalscope.doPause = function() {
+    globalscope.doPause = function () {
         mediaPlayer.pause();
     }
-    globalscope.doStop = function() {
+    globalscope.doStop = function () {
         mediaPlayer.pause();
         mediaPlayer.stop();
     } //To really stop any ongoing flash stuff
-    globalscope.doIncreaseVolume = function() {
+    globalscope.doIncreaseVolume = function () {
         mediaPlayer.setVolume(mediaPlayer.volume + 0.1);
     }
-    globalscope.doDecreaseVolume = function() {
+    globalscope.doDecreaseVolume = function () {
         mediaPlayer.setVolume(mediaPlayer.volume - 0.1);
     }
     //Seeks to the point in time, but does not autoplay
-    globalscope.doSeekTo = function(position) {
+    globalscope.doSeekTo = function (position) {
         mediaPlayer.setCurrentTime(position);
     }
-    globalscope.doGetPosition = function() {
+    globalscope.doGetPosition = function () {
         return mediaPlayer.currentTime;
     }
-    globalscope.doAddCueHere = function() {
+    globalscope.doAddCueHere = function () {
         presentCue('', globalscope.doGetPosition().toFixed(2));
     } //round to two decimal places only, more is not audible anyway
 }
