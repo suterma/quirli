@@ -106,7 +106,9 @@ function createPlayerAndLoadSource(objectURL, sourceType) {
                 globalScope.IsMediaLoaded = true;
             },
             error: function (mediaElement) {
-                console.log('medialement problem is detected: %o', mediaElement);
+                //TODO move error display to property in the model.
+                displayError('medialement problem is detected');
+                //console.log('medialement problem is detected: %o', mediaElement);
                 globalScope.IsMediaLoaded = false;
             }
         });
