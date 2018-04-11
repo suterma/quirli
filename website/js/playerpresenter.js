@@ -22,22 +22,6 @@
  * It uses known identifiers from the view to access and present various data.
  */
 
-//visually initialize the page, including tooltips
-$(document).ready(function () {
-    $("#loadingdisplay").hide(); //to signal working javascript to the user
-    $("#coreui").show(); //to signal working javascript to the user		
-    $("[rel=tooltip]").tooltip();
-    $("#progressdisplay").hide(); //document is ready now
-    $("#errordisplay").hide(); //document is ready now
-
-    //Specially handle the enter key on the url entry field, to actually change the model on enter key
-    $("#sourceurl").keyup(function (event) {
-        if (event.keyCode == 13) {
-            $("#sourceurl").blur();
-        }
-    });
-});
-
 //this method is called after sucessfully loading the media from a mediaelement player
 //and defines the actions for a media element media
 function onMediaelementPlayerReady(mediaelementplayer) {
@@ -61,22 +45,6 @@ function removeAllPlayers() {
     globalScope.PlaybackType = "";
     $("#quirliplayer").empty();
 }
-
-//Displays an error text in the error area
-function displayError(errortext) {
-    $("#errortext").text(errortext);
-    $("#errordisplay").show();
-}
-
-//Removes any previously displayed error
-function removeErrors(errortext) {
-    $("#errortext").text("");
-    $("#errordisplay").hide();
-}
-
-
-
-
 
 //creates a suitable player, sets the source of the matching media player control, and defines the action handlers.
 //this works for real url's only, not for url object of local files (unfortunately these object urls seem to become invalid at the call to this method)
@@ -107,8 +75,7 @@ function createPlayerAndLoadSource(objectURL, sourceType) {
             },
             error: function (mediaElement) {
                 //TODO move error display to property in the model.
-                displayError('medialement problem is detected');
-                //console.log('medialement problem is detected: %o', mediaElement);
+                globalScope.DisplayError('Medialement has a problem.');
                 globalScope.IsMediaLoaded = false;
             }
         });
@@ -140,7 +107,7 @@ function createPlayerAndLoadSource(objectURL, sourceType) {
                 globalScope.IsMediaLoaded = true;
             },
             error: function (mediaElement) {
-                console.log('medialement problem is detected: %o', mediaElement);
+                globalScope.DisplayError('Medialement has a problem.');
                 globalScope.IsMediaLoaded = false;
             }
         });

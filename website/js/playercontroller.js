@@ -21,13 +21,29 @@
  */
 
 //Define the module for this app
+var quirliApp = angular.module('quirli', [])
 //Add directive that allows to set focus with an attribute with name "focus" when set to true
-var quirliApp = angular.module('quirli', []).directive('focus', function () {
+.directive('focus', function () {
     return function (scope, element, attrs) {
         attrs.$observe('focus', function (newValue) {
             newValue === 'true' && element[0].focus();
         });
     }
+})
+//Add directive that shows tooltips with the bootstrap style
+.directive('tooltip', function(){
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs){
+            element.hover(function(){
+                // on mouseenter
+                element.tooltip('show');
+            }, function(){
+                // on mouseleave
+                element.tooltip('hide');
+            });
+        }
+    };
 });
 
 
@@ -46,7 +62,7 @@ var playerController = function ($scope, $location) {
     $scope.PlaybackType = ""; //type of playback of the player: flash, native, silverlight or empty if no media loaded. Thus, this property can also be used to check whether a media was loaded by the player
     $scope.ViewStyle = "edit"; //can change to play later, but this is the default.
     $scope.IsMediaLoaded = false;
-
+    
     //adds a new cue without denoting as the newest one
     $scope.addCue = function () {
         $scope.cues.push({ text: $scope.text, position: $scope.position, recycle: false, isNewest: false, shortcut: '' }); //shortcut is not yet supported recycle is not yet used
@@ -146,7 +162,7 @@ var playerController = function ($scope, $location) {
             return false; //nothing to load at all
         }
         //TODO later check the existence of the referenced file first, to create a better user experience
-        removeErrors();
+        $scope.RemoveErrors();
 
         //determine media type and handle accordingly
         if (objectURL.substr(objectURL.length - 4) === ".wav") {
@@ -164,6 +180,16 @@ var playerController = function ($scope, $location) {
         } else { //we dont know or it is from a content provider like youtube or vimeo: Just assume video, because video generally also can play audio
             createPlayerAndLoadSource(objectURL, "video");
         }
+    }
+    
+    //Displays an error text in the error area
+    $scope.DisplayError = function (errortext) {
+        $scope.ErrorMessage = errortext;
+    }
+
+    //Removes any previously displayed error
+    $scope.RemoveErrors = function () {
+        $scope.ErrorMessage = null;
     }
 
     //preload this scope from the url query when available
