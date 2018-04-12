@@ -95,15 +95,18 @@
         </div>
                 </div>-->
     <!--player container-->
-    <div class="container" ng-controller="playerController">
+    <div class="container" ng-controller="playerController"   ng-cloak>
+        <!--A hint to enable JavaScript, that stays on top, if JavaScript actually is missing-->
+           <p class="text-center" ng-hide="true">Loading... quirli requires JavaScript.</p>
+        
         <!--player application ui-->
-        <div  ng-cloak>
+        <div>
         <!--Error notification-->
         <div ng-show="ErrorMessage.length">
             <div class="alert alert-error">
                 <h4 class="alert-heading">{{ErrorMessage}}</h4>
             </div>
-        </div>
+        </div>        
 
         <!-- The core UI -->
         <div id="mediainput">
