@@ -19,35 +19,6 @@
 /*!
  * Controller for the player, using AngularJS.
  */
-
-//Define the module for this app
-var quirliApp = angular.module('quirli', [])
-//Add directive that allows to set focus with an attribute with name "focus" when set to true
-.directive('focus', function () {
-    return function (scope, element, attrs) {
-        attrs.$observe('focus', function (newValue) {
-            newValue === 'true' && element[0].focus();
-        });
-    }
-})
-//Add directive that shows tooltips with the bootstrap style
-.directive('tooltip', function(){
-    return {
-        restrict: 'A',
-        link: function(scope, element, attrs){
-            element.hover(function(){
-                // on mouseenter
-                element.tooltip('show');
-            }, function(){
-                // on mouseleave
-                element.tooltip('hide');
-            });
-        }
-    };
-});
-
-
-//Create the controller
 var playerController = function ($scope, $location) {
 
     globalScope = $scope; //TODO to give easy access, but later rework to fit the angular style
