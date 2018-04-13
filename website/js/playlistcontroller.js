@@ -19,7 +19,8 @@
 /*!
  * Controller for the playlist, using AngularJS.
  */
-var playlistController = function ($scope, $location) {
+
+function playlistController($scope) {
    
     $scope.tracks = [];    
      
@@ -45,3 +46,5 @@ var playlistController = function ($scope, $location) {
 //Register controller with module
 quirliApp.controller("playlistController", playlistController);
 
+//Register controller with module
+quirliApp.controller("playlistController", playlistController);
