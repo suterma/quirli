@@ -106,23 +106,28 @@
         <!--A hint to enable JavaScript, that stays on top, if JavaScript actually is missing-->
            <p class="text-center" ng-hide="true">Loading... quirli requires JavaScript.</p>
 
-    <!--playlist container-->
-    <div class="container" ng-controller="playlistController" ng-cloak>
-        <!-- Button to trigger modal -->
-        <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal">Show playlist</a>
-
+    <div class="container" ng-cloak>
+   
+        <!--player application ui-->
+        <div ng-controller="playerController" >
+            
+            <p>
+              
+                    <!--playlist application ui (insied the player menu)-->
+                            <!--playlist application ui-->
+        <div  ng-controller="playlistController">
+            <div  ng-show="tracks" >
         <!-- Modal -->
-        <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div id="playlistModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="playlistModalLabel" aria-hidden="true">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="myModalLabel">{{title}}</h3>
+                <h3 id="playlistModalLabel">{{title}}</h3>
             </div>
             <div class="modal-body">
-                <!--Unfortunately, bootstrap-style tooltips do not work for the repeated links-->
-                <div id="tracksdisplay">
+                 <div>
                     <p style="line-height:2.6em">
                         <span ng-repeat="track in tracks">
-                            <a href="#" title="Loads the track &quot;{{track.title}}&quot; into the player" data-placement="top" data-toggle="tooltip" data-original-title="Loads the track &quot;{{track.title}}&quot; into the player" class="btn btn-primary" ng-click="loadTrack(track.url)"><i class="icon-play-circle icon-white"></i>&nbsp;&nbsp;<!-- spaces for nicer display -->{{track.title}}&nbsp;</a>&nbsp;
+                            <a href="#" tooltip rel="tooltip" title="Loads the track &quot;{{track.title}}&quot; into the player" data-placement="right" data-original-title="Loads the track &quot;{{track.title}}&quot; into the player" class="btn btn-primary" ng-click="loadTrack(track.url)"><i class="icon-play-circle icon-white"></i>&nbsp;&nbsp;<!-- spaces for nicer display -->{{track.title}}&nbsp;</a>&nbsp;
                             <br />
                         </span>
                     </p>
@@ -132,38 +137,40 @@
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
             </div>
         </div>
-    </div><!--playlist container-->
-    <div class="container" ng-cloak style="padding-bottom:6px;">
-        <p>
-            <div class="section-divider-horizontal">
-                <span class="section-divider-text">or</span>
-            </div>  
-        </p>
-    </div>
-    <!--player container-->
-    <div class="container" ng-controller="playerController" ng-cloak>        
-        <!--player application ui-->
+                    
+        <!-- Button to trigger modal -->
+        <!--<a href="#playlistModal" role="button" class="btn btn-primary" data-toggle="modal">Show playlist</a>        -->
         <div>
-        <!--Error notification-->
-        <div ng-show="ErrorMessage.length">
-            <div class="alert alert-error">
-                <h4 class="alert-heading">{{ErrorMessage}}</h4>
-            </div>
+       <button href="#playlistModal" role="button" class="btn btn-primary pull-left" data-toggle="modal">Show playlist</button>
+        </div>  
+         
         </div>
-
-            <!-- The core UI -->
-            <p>
+        </div>
+        
+        <div>
+        <!--<button class="btn btn-primary">
+            test
+        </button>-->
+            <!--<a class="btn btn-primary" href="player.html?mode='edit'">New...</a>-->
+        </div>
+        
+            <div ng-show="(IsMediaLoaded)"> 
                 <!--View & Persistence Control-->
-                <button class="btn btn-primary" ng-show="ViewStyle == 'play' && (IsMediaLoaded)" ng-click="setViewStyle('edit')">Edit</button>
-                <button class="btn btn-primary" ng-show="ViewStyle == 'edit' && (IsMediaLoaded)" ng-click="setViewStyle('play')">Rehearse</button>
-                <a class="btn btn-primary" ng-show="(IsMediaLoaded)" href="player.html?mode='edit'">New...</a>
+                <button class="btn btn-primary" ng-show="ViewStyle == 'play'" ng-click="setViewStyle('edit')">Edit</button>
+                <button class="btn btn-primary" ng-show="ViewStyle == 'edit'"" ng-click="setViewStyle('play')">Rehearse</button>
+                <a class="btn btn-primary" href="player.html?mode='edit'">New...</a>
 
-                <span ng-show="IsMediaLoaded">
+                <span>
                     <a class="btn btn-primary" data-toggle="modal" href="#modalSaveAsLink" ng-click="SaveAsLink()">Share as link...</a>
                     <i class="icon-question-sign" tooltip rel="tooltip" title="Provides the track, consisting of media url and cues, as a reusable link."></i>
                 </span>
+            </div>
             </p>
             
+            <div class="clearfix">
+            </div>
+            
+     
             <div id="mediainput">
                 <p ng-show="ViewStyle == 'edit'">
                     <input ng-model="MediaUrl" class="input-xxlarge" type="text" id="sourceurl" autocomplete="on"
@@ -194,7 +201,14 @@
             <p>
                 <strong>{{TrackTitle}}</strong><span ng-show="(ArtistName.length)"> by </span><!--Show only when there is an artist mentioned--><strong>{{ArtistName}}</strong><span ng-show="(AlbumName.length)"> on </span><!--Show only when there is an album mentioned--><strong>{{AlbumName}}</strong>
             </p>
-            <!-- Media player -->
+        <!-- Player Error notification-->
+        <div ng-show="ErrorMessage.length">
+            <div class="alert alert-error">
+                <h4 class="alert-heading">{{ErrorMessage}}</h4>
+            </div>
+        </div>      
+        
+                    <!-- Media player -->
             <div id="mediaplayer">
                 <div id="quirliplayer"></div>
                 <div id="playercontrols" ng-show="ViewStyle == 'edit' && (IsMediaLoaded)">
