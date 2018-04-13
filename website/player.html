@@ -72,6 +72,7 @@
     
     <!-- Load the player angular controller.-->
     <script src="js/playercontroller.js"></script>
+    
     <!-- Load the presenter code for the player view -->
     <script src="js/playerpresenter.js"></script>
 
@@ -102,6 +103,9 @@
     </div>
         </div>
                 </div>-->
+        <!--A hint to enable JavaScript, that stays on top, if JavaScript actually is missing-->
+           <p class="text-center" ng-hide="true">Loading... quirli requires JavaScript.</p>
+
     <!--playlist container-->
     <div class="container" ng-controller="playlistController" ng-cloak>
         <!-- Button to trigger modal -->
@@ -123,14 +127,11 @@
                         </span>
                     </p>
                 </div>
-
-
             </div>
             <div class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
             </div>
         </div>
-
     </div><!--playlist container-->
     <div class="container" ng-cloak style="padding-bottom:6px;">
         <p>
@@ -140,10 +141,7 @@
         </p>
     </div>
     <!--player container-->
-    <div class="container" ng-controller="playerController" ng-cloak>
-        <!--A hint to enable JavaScript, that stays on top, if JavaScript actually is missing-->
-           <p class="text-center" ng-hide="true">Loading... quirli requires JavaScript.</p>
-        
+    <div class="container" ng-controller="playerController" ng-cloak>        
         <!--player application ui-->
         <div>
         <!--Error notification-->
@@ -151,8 +149,21 @@
             <div class="alert alert-error">
                 <h4 class="alert-heading">{{ErrorMessage}}</h4>
             </div>
+        </div>
 
             <!-- The core UI -->
+            <p>
+                <!--View & Persistence Control-->
+                <button class="btn btn-primary" ng-show="ViewStyle == 'play' && (IsMediaLoaded)" ng-click="setViewStyle('edit')">Edit</button>
+                <button class="btn btn-primary" ng-show="ViewStyle == 'edit' && (IsMediaLoaded)" ng-click="setViewStyle('play')">Rehearse</button>
+                <a class="btn btn-primary" ng-show="(IsMediaLoaded)" href="player.html?mode='edit'">New...</a>
+
+                <span ng-show="IsMediaLoaded">
+                    <a class="btn btn-primary" data-toggle="modal" href="#modalSaveAsLink" ng-click="SaveAsLink()">Share as link...</a>
+                    <i class="icon-question-sign" tooltip rel="tooltip" title="Provides the track, consisting of media url and cues, as a reusable link."></i>
+                </span>
+            </p>
+            
             <div id="mediainput">
                 <p ng-show="ViewStyle == 'edit'">
                     <input ng-model="MediaUrl" class="input-xxlarge" type="text" id="sourceurl" autocomplete="on"
@@ -230,20 +241,11 @@
                         </li>
                     </ul>
                 </div>
+                </p>
             <p ng-show="ViewStyle == 'play'" id="cuedisplayplay" style="line-height:2.6em">
                 <span ng-repeat="cue in cues"><button class="btn btn-success" ng-click="playFromPosition(cue.position)"><i class="icon-play icon-white" rel="tooltip" title="Skips the media position to this cue."></i>&nbsp;&nbsp;<!-- spaces for nicer display -->{{cue.text}}&nbsp;</button>&nbsp;</span>
             </p>
-            <p>
-                <!--View & Persistence Control-->
-                <button class="btn btn-primary" ng-show="ViewStyle == 'play' && (IsMediaLoaded)" ng-click="setViewStyle('edit')">Edit</button>
-                <button class="btn btn-primary" ng-show="ViewStyle == 'edit' && (IsMediaLoaded)" ng-click="setViewStyle('play')">Rehearse</button>
-                <a class="btn btn-primary" ng-show="(IsMediaLoaded)" href="player.html?mode='edit'">New...</a>
 
-                <span ng-show="IsMediaLoaded">
-                    <a class="btn btn-primary" data-toggle="modal" href="#modalSaveAsLink" ng-click="SaveAsLink()">Share as link...</a>
-                    <i class="icon-question-sign" tooltip rel="tooltip" title="Provides the track, consisting of media url and cues, as a reusable link."></i>
-                </span>
-            </p>
             <div class="modal hide" id="modalSaveAsLink">
                 <!-- Save as link, modal variant-->
                 <div class="modal-header">

@@ -45,6 +45,3 @@ function playlistController($scope) {
 }
 //Register controller with module
 quirliApp.controller("playlistController", playlistController);
-
-//Register controller with module
-quirliApp.controller("playlistController", playlistController);

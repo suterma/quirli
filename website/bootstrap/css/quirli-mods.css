@@ -148,5 +148,6 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
     background-color: white;
     text-align: center;
     padding: 8px;
+    color: #cccccc;
 }
 
