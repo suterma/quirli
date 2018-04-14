@@ -107,16 +107,9 @@
            <p class="text-center" ng-hide="true">Loading... quirli requires JavaScript.</p>
 
     <div class="container" ng-cloak>
-   
-        <!--player application ui-->
-        <div ng-controller="playerController" >
-            
-            <p>
-              
-                    <!--playlist application ui (insied the player menu)-->
-                            <!--playlist application ui-->
+                    <!--playlist application ui-->
         <div  ng-controller="playlistController">
-            <div  ng-show="tracks" >
+            <p  ng-show="tracks" >
         <!-- Modal -->
         <div id="playlistModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="playlistModalLabel" aria-hidden="true">
             <div class="modal-header">
@@ -139,13 +132,16 @@
         </div>
                     
         <!-- Button to trigger modal -->
-        <!--<a href="#playlistModal" role="button" class="btn btn-primary" data-toggle="modal">Show playlist</a>        -->
-        <div>
-       <button href="#playlistModal" role="button" class="btn btn-primary pull-left" data-toggle="modal">Show playlist</button>
-        </div>  
-         
+        <a href="#playlistModal" role="button" class="btn btn-secondary" data-toggle="modal">Show playlist...</a>        
+        </p>
         </div>
-        </div>
+   
+        <!--player application ui-->
+        <div ng-controller="playerController" >
+            
+            <p>
+           
+
         
         <div>
         <!--<button class="btn btn-primary">
@@ -260,7 +256,7 @@
                 <span ng-repeat="cue in cues"><button class="btn btn-success" ng-click="playFromPosition(cue.position)"><i class="icon-play icon-white" rel="tooltip" title="Skips the media position to this cue."></i>&nbsp;&nbsp;<!-- spaces for nicer display -->{{cue.text}}&nbsp;</button>&nbsp;</span>
             </p>
 
-            <div class="modal hide" id="modalSaveAsLink">
+            <div class="modal hide fade" id="modalSaveAsLink">
                 <!-- Save as link, modal variant-->
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">x</button>
@@ -280,7 +276,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a href="#" class="btn btn-inverse" data-dismiss="modal">Close</a>
+                    <a href="#" class="btn" data-dismiss="modal">Close</a>
                 </div>
             </div>
         </div>
