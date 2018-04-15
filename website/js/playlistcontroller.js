@@ -22,20 +22,22 @@
 
 function playlistController($scope) {
    
-    $scope.tracks = [];    
-     
+    $scope.tracks = [];         
+    $scope.title = "";
+    
     $scope.addTrack = function(title, url) {
-    $scope.tracks.push({ title: title, url: url});
+        $scope.tracks.push({ title: title, url: url});
     };
 
     $scope.loadTrack = function (url) {
-    window.location.href = url;
+        window.location.href = url;
     }
 
     $scope.title = "";
     
     //Get the playlist content
     //This will use the function name 'callback_json1' as callback method.
+    //JSONP is used over JSON to allow data from other domains (currently not used)
     JSONP.get('./playlistcontent.jsonp', {}, function (data) {
         //do something with data, which is the JSON object received from the url            
         $scope.title = data.title;
