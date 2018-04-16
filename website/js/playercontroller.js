@@ -36,7 +36,7 @@ var playerController = function ($scope, $location) {
     
     //adds a new cue without denoting as the newest one
     $scope.addCue = function () {
-        $scope.cues.push({ text: $scope.text, position: $scope.position, recycle: false, isNewest: false, shortcut: '' }); //shortcut is not yet supported recycle is not yet used
+        $scope.cues.push({ text: $scope.text, position: $scope.position, recycle: false, isNewest: false, shortcut: $scope.shortcut }); 
 
         $scope.postAddTask();
     };
@@ -49,7 +49,7 @@ var playerController = function ($scope, $location) {
         });
 
         //add this one as the newest
-        $scope.cues.push({ text: $scope.text, position: $scope.position, recycle: false, isNewest: true, shortcut: '' }); //shortcut is not yet supported recycle is not yet used
+        $scope.cues.push({ text: $scope.text, position: $scope.position, recycle: false, isNewest: true, shortcut: $scope.shortcut }); 
 
         $scope.postAddTask();
     };
@@ -105,7 +105,7 @@ var playerController = function ($scope, $location) {
         var cues = [];
         $.each($scope.cues, function (index, item) {
             //alert(index + ': ' + value);
-            var cue = item.position + "=" + encodeURIComponent(item.text);
+            var cue = item.position + "=" + encodeURIComponent(item.text) + "--" + encodeURIComponent(item.shortcut);
             cues.push(cue);
         });
         var serializedCues = cues.join('&');
@@ -195,10 +195,6 @@ function parseQueryParameter($scope) {
     if (albumName) { //there is any?
         $scope.AlbumName = albumName;
     }
-    //var debug = decodeURIComponent(gup(url, 'debug'));
-    //if (debug) { //there is debug requested?
-    //    $scope.Debug = debug;
-    //}
 
     //now find the cues
     //get the entries
@@ -213,7 +209,11 @@ function parseQueryParameter($scope) {
         if (isNumber(key)) {
             anyCuesFound = true;
             $scope.position = parseFloat(key);
-            $scope.text = decodeURIComponent(value);
+            //parse the text and shortcut (if available)
+            var text = decodeURIComponent(value);
+            var textComponent = text.split('--');
+            $scope.text = textComponent[0];
+            $scope.shortcut = textComponent[1];
             $scope.addCue();
         } //otherwise leave that entry out     			
     });
