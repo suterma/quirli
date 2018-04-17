@@ -107,6 +107,8 @@
     <p class="text-center" ng-hide="true">Loading... quirli requires JavaScript.</p>
 
     <div class="container" ng-cloak>
+
+
         <!--playlist application ui-->
         <div ng-controller="playlistController">
             <p ng-show="tracks">
@@ -120,7 +122,8 @@
                         <div>
             <p style="line-height:2.6em">
                 <span ng-repeat="track in tracks">
-                    <a href="#" tooltip rel="tooltip" title="Loads the track &quot;{{track.title}}&quot; into the player" data-placement="right" data-original-title="Loads the track &quot;{{track.title}}&quot; into the player" class="btn btn-primary" ng-click="loadTrack(track.url)"><i class="icon-play-circle icon-white"></i>&nbsp;&nbsp;<!-- spaces for nicer display -->{{track.title}}&nbsp;</a>&nbsp;
+                    <a href="#" tooltip rel="tooltip" title="Loads the track &quot;{{track.title}}&quot; into the player" data-placement="right" data-original-title="Loads the track &quot;{{track.title}}&quot; into the player" class="btn btn-primary" ng-click="loadTrack(track.url)">
+                        <i class="icon-play-circle icon-white"></i>&nbsp;&nbsp;<!-- spaces for nicer display -->{{track.title}}&nbsp;</a>&nbsp;
                     <br />
                 </span>
             </p>
@@ -131,48 +134,47 @@
     </div>
     </div>
 
-    <!-- Button to trigger modal -->
-    <a href="#playlistModal" role="button" class="btn btn-secondary" data-toggle="modal">Show playlist...</a>
+    <!-- Button to trigger modal 
+    <a href="#playlistModal" role="button" class="btn btn-secondary" data-toggle="modal">Show playlist...</a> -->
     </p>
     </div>
 
     <!--player application ui-->
     <div ng-controller="playerController">
-
-        <p>
-
-
+  <!--Buttons-->
+        <p>          
 
             <div>
-                <!--<button class="btn btn-primary">
-                    test
-                </button>-->
-                <!--<a class="btn btn-primary" href="player.html?mode='edit'">New...</a>-->
-            </div>
+                
+     <!-- Button to trigger playlist modal
+    <button href="#playlistModal" role="button" class="btn btn-secondary" data-toggle="modal">Show playlist...</button>    -->
+    
+                    <!--View & Persistence Control-->
+                <button class="btn btn-primary" ng-show="ViewStyle == 'play' && (IsMediaLoaded)" ng-click="setViewStyle('edit')">Edit</button>
+                <button class="btn btn-primary" ng-show="ViewStyle == 'edit' && (IsMediaLoaded)" ng-click="setViewStyle('play')">Rehearse</button>
+                <a class="btn btn-primary" href="player.html?mode='edit'" ng-show="(IsMediaLoaded)">New...</a>
 
-            <div ng-show="(IsMediaLoaded)">
-                <!--View & Persistence Control-->
-                <button class="btn btn-primary" ng-show="ViewStyle == 'play'" ng-click="setViewStyle('edit')">Edit</button>
-                <button class="btn btn-primary" ng-show="ViewStyle == 'edit'" ng-click="setViewStyle('play')">Rehearse</button>
-                <a class="btn btn-primary" href="player.html?mode='edit'">New...</a>
-
-                <span>
+                <span ng-show="(IsMediaLoaded)">
                     <a class="btn btn-primary" data-toggle="modal" href="#modalSaveAsLink" ng-click="SaveAsLink()">Share as link...</a>
                     <i class="icon-question-sign" tooltip rel="tooltip" title="Provides the track, consisting of media url and cues, as a reusable link."></i>
                 </span>
+
+                           <!-- Button to trigger playlist modal -->
+                           <span class="pull-right" ng-show="(IsMediaLoaded)">&nbsp;or show <a href="#playlistModal" role="button" data-toggle="modal">playlist</a></span>   
+                
             </div>
         </p>
-
-        <div class="clearfix">
-        </div>
-
 
         <div id="mediainput">
             <p ng-show="ViewStyle == 'edit'">
                 <input ng-model="MediaUrl" class="input-xxlarge" type="text" id="sourceurl" autocomplete="on"
                        ng-change="loadMediaUrl()"
                        placeholder="Enter URL to media file or YouTube video" name="sourceurl" />
-            </p>
+                       
+                           <!-- Button to trigger playlist modal -->
+                           <span class="pull-right" ng-show="(!IsMediaLoaded)">&nbsp;or show <a href="#playlistModal" role="button" data-toggle="modal">playlist</a></span>   
+ 
+            </p>       
             <p ng-show="ViewStyle == 'edit' && (IsMediaLoaded)">
                 <input ng-model="TrackTitle" class="input-large" type="text" id="TrackTitle" autocomplete="on" placeholder="Track title" name="TrackTitle" />
                 <span ng-show="(ArtistName.length)"> by </span><!--Show only when there is an artist mentioned-->
