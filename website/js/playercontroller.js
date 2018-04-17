@@ -104,14 +104,17 @@ var playerController = function ($scope, $location) {
     $scope.SaveAsLink = function () {
         var cues = [];
         $.each($scope.cues, function (index, item) {
-            //alert(index + ': ' + value);
-            var cue = item.position + "=" + encodeURIComponent(item.text) + "--" + encodeURIComponent(item.shortcut);
+            var cue = item.position + "=" + encodeURIComponent(item.text) ;
+            if (item.shortcut)
+            { 
+                cue = cue + "--" + encodeURIComponent(item.shortcut);
+            }
             cues.push(cue);
         });
         var serializedCues = cues.join('&');
 
         //serialize the media file url
-        var pageUrlWithoutQuery = window.location.href.split('?')[0]; //get the url without the (probably already existing) query part
+        var pageUrlWithoutQuery = $location.absUrl().split('?')[0]; //get the url without the (probably already existing) query part
         pageUrl = pageUrlWithoutQuery.split('#')[0]; //get the url without the (probably already existing) fragment part
 
         //provide the link url
@@ -120,9 +123,8 @@ var playerController = function ($scope, $location) {
             "&artist=" + encodeURIComponent($scope.ArtistName) +
             "&album=" + encodeURIComponent($scope.AlbumName) +
             "&" + serializedCues;
-        //TODO instead of saving diretcly to items, provide as model property
-        $("#savelinkInBox").val(linkUrl);
-        $("#savelinkToLoad").attr("href", linkUrl);
+        //Provide as model property
+        $scope.TrackShareUrl = linkUrl;
     }
 
     //loads the content of the specified url into a new, matching media player
