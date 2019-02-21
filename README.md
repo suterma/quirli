@@ -1,4 +1,9 @@
 # quirli - replay with ease
+![License](https://img.shields.io/github/license/suterma/quirli.svg)
+![GitHub All Releases](https://img.shields.io/github/downloads/suterma/quirli/total.svg)
+![Release](https://img.shields.io/github/release/suterma/quirli.svg)
+![Language](https://img.shields.io/github/languages/top/suterma/quirli.svg)
+
 quirli is a free media player for replay and rehearsal. It's main feature is fast navigation to predefined cue points in the media.
 
 ![A visual overview over how quirli works.](http://quir.li/img/HowItWorks.png "A visual overview over how quirli works.")
