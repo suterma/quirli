@@ -1,6 +1,6 @@
 /*! 
     quirli, replay with ease.
-    Copyright (C) 2012-2018 by marcel suter, marcel@codeministry.ch
+    Copyright (C) 2012-2018 by marcel suter, marcel@marcelsuter.ch
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,10 +19,23 @@
 /*!
  * Controller for the player, using AngularJS.
  */
-var playerController = function ($scope, $location) {
 
+
+//Directive that allows to set focus with an attribute with name "focus" when set to true
+var quirliApp = angular.module('quirli', []).directive('focus', function () {
+    return function (scope, element, attrs) {
+        attrs.$observe('focus', function (newValue) {
+            newValue === 'true' && element[0].focus();
+        });
+    }
+});
+
+
+
+function playerController($scope, $location) {
+    
     globalScope = $scope; //TODO to give easy access, but later rework to fit the angular style
-
+    
     //---Track adder field which are used when a new track is added
     $scope.ArtistName = "";
     $scope.AlbumName = "";
@@ -32,11 +45,10 @@ var playerController = function ($scope, $location) {
     $scope.MediaUrl = "";
     $scope.PlaybackType = ""; //type of playback of the player: flash, native, silverlight or empty if no media loaded. Thus, this property can also be used to check whether a media was loaded by the player
     $scope.ViewStyle = "edit"; //can change to play later, but this is the default.
-    $scope.IsMediaLoaded = false;
-    
+     
     //adds a new cue without denoting as the newest one
     $scope.addCue = function () {
-        $scope.cues.push({ text: $scope.text, position: $scope.position, recycle: false, isNewest: false, shortcut: $scope.shortcut }); 
+        $scope.cues.push({ text: $scope.text, position: $scope.position, recycle: false, isNewest:false, shortcut: '' }); //shortcut is not yet supported recycle is not yet used
 
         $scope.postAddTask();
     };
@@ -49,7 +61,7 @@ var playerController = function ($scope, $location) {
         });
 
         //add this one as the newest
-        $scope.cues.push({ text: $scope.text, position: $scope.position, recycle: false, isNewest: true, shortcut: $scope.shortcut }); 
+        $scope.cues.push({ text: $scope.text, position: $scope.position, recycle: false, isNewest: true, shortcut: '' }); //shortcut is not yet supported recycle is not yet used
 
         $scope.postAddTask();
     };
@@ -66,12 +78,20 @@ var playerController = function ($scope, $location) {
         $scope.shortcut = '';
     };
 
-    //removes any recycled cue from the cues collection
-    //as there is no "remove" in JavaScript for array, implemented by rebuilding the cues collection
-    $scope.archive = function () {
+
+
+    $scope.remaining = function() {
+        var count = 0;
+        angular.forEach($scope.cues, function (cue) {
+            count += cue.recycle ? 0 : 1;
+        });
+        return count;
+    };
+     
+    $scope.archive = function() {
         var oldcues = $scope.cues;
         $scope.cues = [];
-        angular.forEach(oldcues, function (cue) {
+        angular.forEach(oldcues, function(cue) {
             if (!cue.recycle) $scope.cues.push(cue);
         });
     };
@@ -96,26 +116,23 @@ var playerController = function ($scope, $location) {
 
     $scope.setViewStyle = function (style) {
         $scope.ViewStyle = style;
+        $scope.$apply();
     }
 
 
     //creates an url of the current page, with parameters describing the media and cues
     //and presents that in a textbox for copying by the user
-    $scope.SaveAsLink = function () {
+    $scope.SaveAsLink = function() {
         var cues = [];
         $.each($scope.cues, function (index, item) {
-            var cue = item.position + "=" + encodeURIComponent(item.text) ;
-            if (item.shortcut)
-            { 
-                cue = cue + "--" + encodeURIComponent(item.shortcut);
-            }
+            //alert(index + ': ' + value);
+            var cue = item.position + "=" + encodeURIComponent(item.text);
             cues.push(cue);
         });
         var serializedCues = cues.join('&');
 
         //serialize the media file url
-        var pageUrlWithoutQuery = $location.absUrl().split('?')[0]; //get the url without the (probably already existing) query part
-        pageUrl = pageUrlWithoutQuery.split('#')[0]; //get the url without the (probably already existing) fragment part
+        var pageUrl = window.location.href.split('?')[0]; //get the url without the (probably already existing) query part
 
         //provide the link url
         var linkUrl = pageUrl + "?media=" + encodeURIComponent($scope.MediaUrl) +
@@ -123,46 +140,9 @@ var playerController = function ($scope, $location) {
             "&artist=" + encodeURIComponent($scope.ArtistName) +
             "&album=" + encodeURIComponent($scope.AlbumName) +
             "&" + serializedCues;
-        //Provide as model property
-        $scope.TrackShareUrl = linkUrl;
-    }
-
-    //loads the content of the specified url into a new, matching media player
-    //later, instead of interpreting the url, actually request the file
-    $scope.loadMediaUrl = function () {
-        var objectURL = $scope.MediaUrl;
-        if ((objectURL === null) || (objectURL === '')) {
-            return false; //nothing to load at all
-        }
-        //TODO later check the existence of the referenced file first, to create a better user experience
-        $scope.RemoveErrors();
-
-        //determine media type and handle accordingly
-        if (objectURL.substr(objectURL.length - 4) === ".wav") {
-            createPlayerAndLoadSource(objectURL, "audio");
-        } else if (objectURL.substr(objectURL.length - 4) === ".mp3") {
-            createPlayerAndLoadSource(objectURL, "audio");
-        } else if (objectURL.substr(objectURL.length - 4) === ".ogv") {
-            createPlayerAndLoadSource(objectURL, "video");
-        } else if (objectURL.substr(objectURL.length - 4) === ".wmv") {
-            createPlayerAndLoadSource(objectURL, "video");
-        } else if (objectURL.substr(objectURL.length - 5) === ".webm") {
-            createPlayerAndLoadSource(objectURL, "video");
-        } else if (objectURL.substr(objectURL.length - 4) === ".mp4") {
-            createPlayerAndLoadSource(objectURL, "video");
-        } else { //we dont know or it is from a content provider like youtube or vimeo: Just assume video, because video generally also can play audio
-            createPlayerAndLoadSource(objectURL, "video");
-        }
-    }
-    
-    //Displays an error text in the error area
-    $scope.DisplayError = function (errortext) {
-        $scope.ErrorMessage = errortext;
-    }
-
-    //Removes any previously displayed error
-    $scope.RemoveErrors = function () {
-        $scope.ErrorMessage = null;
+        //TODO instead of saving diretcly to items, provide as model property
+        $("#savelinkInBox").val(linkUrl);
+        $("#savelinkToLoad").attr("href", linkUrl);
     }
 
     //preload this scope from the url query when available
@@ -170,15 +150,10 @@ var playerController = function ($scope, $location) {
     parseQueryParameter($scope);
 }
 
-//Register controller with module
-quirliApp.controller("playerController", playerController);
-
-//TODO move into the controller
 //parses the query parameter and preloads the model with it's data
 function parseQueryParameter($scope) {
     //TODO later use the $location from the scope to get the url, to comply with angular style
-    var windowUrl = window.location.href;
-    url = windowUrl.split('#')[0]; //get the url without the (probably existing) fragment part
+    var url = window.location.href;
 
     //Load track from parameters		
     var mediaUrl = decodeURIComponent(gup(url, 'media'));
@@ -197,6 +172,10 @@ function parseQueryParameter($scope) {
     if (albumName) { //there is any?
         $scope.AlbumName = albumName;
     }
+    //var debug = decodeURIComponent(gup(url, 'debug'));
+    //if (debug) { //there is debug requested?
+    //    $scope.Debug = debug;
+    //}
 
     //now find the cues
     //get the entries
@@ -211,11 +190,7 @@ function parseQueryParameter($scope) {
         if (isNumber(key)) {
             anyCuesFound = true;
             $scope.position = parseFloat(key);
-            //parse the text and shortcut (if available)
-            var text = decodeURIComponent(value);
-            var textComponent = text.split('--');
-            $scope.text = textComponent[0];
-            $scope.shortcut = textComponent[1];
+            $scope.text = decodeURIComponent(value);
             $scope.addCue();
         } //otherwise leave that entry out     			
     });
@@ -227,7 +202,7 @@ function parseQueryParameter($scope) {
     else {
         $scope.ViewStyle = "edit"; //to encourage adding cues
     }
-    $scope.loadMediaUrl(mediaUrl); //TODO later decouple this presenter method from here and use a watch with comparing to the current value to avoid flickering on textbox blur
+    loadMediaUrl(mediaUrl); //TODO later decouple this presenter method from here and use a watch with comparing to the current value to avoid flickering on textbox blur
 }
 
 //---Helpers

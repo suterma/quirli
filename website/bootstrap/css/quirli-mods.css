@@ -1,6 +1,6 @@
 /*
     quirli, replay with ease.
-    Copyright (C) 2012-2018 by marcel suter, marcel@codeministry.ch
+    Copyright (C) 2012-2018 by marcel suter, marcel@marcelsuter.ch
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,12 +17,6 @@
 */
 
 /*Modifications to bootstrap to make it more the way quirli should look like*/
-
-/* Content down-move to keep "air"
--------------------------------------------------- */
-body {
-    padding-top: 20px;
-}
 
 /* Footer
 -------------------------------------------------- */
@@ -52,13 +46,18 @@ body {
             padding-left: 0;
         }
 
-/* Full-widht footer */
-.footer {
-    position: fixed;
-    left: 0px;
-    right: 0px;
-}
+/* To have the footer full-width also on smaller screens, compensate the body padding which is applied by bootstrap. */
+@media (max-width: 767px) {
+    .footer {
+        margin-right: -20px;
+        margin-left: -20px;
+    }
 
+        .footer .container {
+            margin-right: 20px;
+            margin-left: 20px;
+        }
+}
 
 /*nicer blue for labels and badges that matches the blue primary buttons
 -------------------------------------------------- */
@@ -134,20 +133,3 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
     outline: 0 none; /*keep as is*/
     background-color: rgba(82, 168, 236, 0.3); /*Make colored background to emphasize the focused stuff*/
 }
-
-/*  a divider between sections
--------------------------------------------------- */
-.section-divider-horizontal {
-    width: 100%;
-    height: 10px;
-    border-bottom: 1px solid #e5e5e5;
-    text-align: center;
-}
-
-.section-divider-text {
-    background-color: white;
-    text-align: center;
-    padding: 8px;
-    color: #cccccc;
-}
-

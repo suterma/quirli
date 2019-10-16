@@ -1,6 +1,6 @@
 /*! 
     quirli, replay with ease.
-    Copyright (C) 2012-2018 by marcel suter, marcel@codeministry.ch
+    Copyright (C) 2012-2018 by marcel suter, marcel@marcelsuter.ch
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,24 +20,22 @@
  * Controller for the playlist, using AngularJS.
  */
 
-function playlistController($scope) {
+function playlistcontroller($scope) {
    
-    $scope.tracks = [];         
-    $scope.title = "";
-    
+    $scope.tracks = [];    
+     
     $scope.addTrack = function(title, url) {
-        $scope.tracks.push({ title: title, url: url});
+    $scope.tracks.push({ title: title, url: url});
     };
 
     $scope.loadTrack = function (url) {
-        window.location.href = url;
+    window.location.href = url;
     }
 
     $scope.title = "";
     
     //Get the playlist content
     //This will use the function name 'callback_json1' as callback method.
-    //JSONP is used over JSON to allow data from other domains (currently not used)
     JSONP.get('./playlistcontent.jsonp', {}, function (data) {
         //do something with data, which is the JSON object received from the url            
         $scope.title = data.title;
@@ -45,5 +43,3 @@ function playlistController($scope) {
         $scope.$apply();
     });        
 }
-//Register controller with module
-quirliApp.controller("playlistController", playlistController);

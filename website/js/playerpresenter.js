@@ -1,6 +1,6 @@
 /*!
     quirli, replay with ease.
-    Copyright (C) 2012-2018 by marcel suter, marcel@codeministry.ch
+    Copyright (C) 2012-2018 by marcel suter, marcel@marcelsuter.ch
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,12 +22,30 @@
  * It uses known identifiers from the view to access and present various data.
  */
 
+//visually initialize the page, including tooltips
+$(document).ready(function() {
+    $("#loadingdisplay").hide(); //to signal working javascript to the user
+    $("#coreui").show(); //to signal working javascript to the user		
+    $("[rel=tooltip]").tooltip();
+    $("#playercontrols").hide(); //initially, there is no media to control for playing
+    $("#progressdisplay").hide(); //document is ready now
+    $("#errordisplay").hide(); //document is ready now
+
+    //Specially handle the enter key on the url entry field, to actually change the model on enter key
+    $("#sourceurl").keyup(function(event) {
+        if (event.keyCode == 13) {
+            $("#sourceurl").blur();
+        }
+    });
+});
+
 //this method is called after sucessfully loading the media from a mediaelement player
 //and defines the actions for a media element media
 function onMediaelementPlayerReady(mediaelementplayer) {
     mediaelementplayer.load();
     defineMediaPlayerHandling(mediaelementplayer, globalScope);
     globalScope.PlaybackType = mediaelementplayer.rendererName;
+    globalScope.$apply();
 }
 
 
@@ -46,6 +64,47 @@ function removeAllPlayers() {
     $("#quirliplayer").empty();
 }
 
+//Displays an error text in the error area
+function displayError(errortext) {
+    $("#errortext").text(errortext);
+    $("#errordisplay").show();
+}
+
+//Removes any previously displayed error
+function removeErrors(errortext) {
+    $("#errortext").text("");
+    $("#errordisplay").hide();
+}
+
+
+
+//loads the content of the specified url into a new, matching media player
+//later, instead of interpreting the url, actually request the file
+function loadMediaUrl(objectURL) {
+    if ((objectURL === null) || (objectURL === '')) {
+        return false; //nothing to load at all
+    }
+    //TODO later check the existence of the referenced file first, to create a better user experience
+    removeErrors();
+
+    //determine media type and handle accordingly
+    if (objectURL.substr(objectURL.length - 4) === ".wav") {
+        createPlayerAndLoadSource(objectURL, "audio");
+    } else if (objectURL.substr(objectURL.length - 4) === ".mp3") {
+        createPlayerAndLoadSource(objectURL, "audio");
+    } else if (objectURL.substr(objectURL.length - 4) === ".ogv") {
+        createPlayerAndLoadSource(objectURL, "video");
+    } else if (objectURL.substr(objectURL.length - 4) === ".wmv") {
+        createPlayerAndLoadSource(objectURL, "video");
+    } else if (objectURL.substr(objectURL.length - 5) === ".webm") {
+        createPlayerAndLoadSource(objectURL, "video");
+    } else if (objectURL.substr(objectURL.length - 4) === ".mp4") {
+        createPlayerAndLoadSource(objectURL, "video");
+    } else { //we dont know or it is from a content provider like youtube or vimeo: Just assume video, because video generally also can play audio
+        createPlayerAndLoadSource(objectURL, "video");
+    }
+}
+
 //creates a suitable player, sets the source of the matching media player control, and defines the action handlers.
 //this works for real url's only, not for url object of local files (unfortunately these object urls seem to become invalid at the call to this method)
 function createPlayerAndLoadSource(objectURL, sourceType) {
@@ -59,7 +118,7 @@ function createPlayerAndLoadSource(objectURL, sourceType) {
         audio.controls = true;
         audio.src = objectURL;
         audio.preload = true;
-        $("#quirliplayer").append(audio);
+       $("#quirliplayer").append(audio);
         var mediaelementplayer = new MediaElementPlayer(audio, {
             alwaysShowControls: true,
             enableAutosize: true,
@@ -69,14 +128,11 @@ function createPlayerAndLoadSource(objectURL, sourceType) {
             features: ['playpause', 'progress', 'current', 'duration', 'tracks', 'volume', 'fullscreen'],
             // when this player starts, it will pause other players
             pauseOtherPlayers: true,
-            success: function (mediaelementplayer) {
+            success: function(mediaelementplayer) {
                 onMediaelementPlayerReady.apply(this, arguments)
-                globalScope.IsMediaLoaded = true;
             },
-            error: function (mediaElement) {
-                //TODO move error display to property in the model.
-                globalScope.DisplayError('Medialement has a problem.');
-                globalScope.IsMediaLoaded = false;
+            error: function(mediaElement) {
+                console.log('medialement problem is detected: %o', mediaElement);
             }
         });
 
@@ -102,13 +158,11 @@ function createPlayerAndLoadSource(objectURL, sourceType) {
             features: ['playpause', 'progress', 'current', 'duration', 'tracks', 'volume', 'fullscreen'],
             // when this player starts, it will pause other players
             pauseOtherPlayers: true,
-            success: function (mediaelementplayer) {
+            success: function(mediaelementplayer) {
                 onMediaelementPlayerReady.apply(this, arguments)
-                globalScope.IsMediaLoaded = true;
             },
-            error: function (mediaElement) {
-                globalScope.DisplayError('Medialement has a problem.');
-                globalScope.IsMediaLoaded = false;
+            error: function(mediaElement) {
+                console.log('medialement problem is detected: %o', mediaElement);
             }
         });
     }
@@ -126,33 +180,33 @@ function presentCue(caption, position) {
 
 //defines the concrete MediaelementJs player actions for the standardized do...Actions
 function defineMediaPlayerHandling(mediaPlayer, globalscope) {
-    globalscope.doPlay = function () {
+    globalscope.doPlay = function() {
         //The audio flash requires this check below, otherwise it plays more than once when clicked the play button repeatedly
         if (mediaPlayer.paused || mediaPlayer.ended) {
             mediaPlayer.play();
         }
     } //make sure we do not "play twice"
-    globalscope.doPause = function () {
+    globalscope.doPause = function() {
         mediaPlayer.pause();
     }
-    globalscope.doStop = function () {
+    globalscope.doStop = function() {
         mediaPlayer.pause();
         mediaPlayer.stop();
     } //To really stop any ongoing flash stuff
-    globalscope.doIncreaseVolume = function () {
+    globalscope.doIncreaseVolume = function() {
         mediaPlayer.setVolume(mediaPlayer.volume + 0.1);
     }
-    globalscope.doDecreaseVolume = function () {
+    globalscope.doDecreaseVolume = function() {
         mediaPlayer.setVolume(mediaPlayer.volume - 0.1);
     }
     //Seeks to the point in time, but does not autoplay
-    globalscope.doSeekTo = function (position) {
+    globalscope.doSeekTo = function(position) {
         mediaPlayer.setCurrentTime(position);
     }
-    globalscope.doGetPosition = function () {
+    globalscope.doGetPosition = function() {
         return mediaPlayer.currentTime;
     }
-    globalscope.doAddCueHere = function () {
+    globalscope.doAddCueHere = function() {
         presentCue('', globalscope.doGetPosition().toFixed(2));
     } //round to two decimal places only, more is not audible anyway
 }

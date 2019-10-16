@@ -1,6 +1,6 @@
 /*!
     quirli, replay with ease.
-    Copyright (C) 2012-2018 by marcel suter, marcel@codeministry.ch
+    Copyright (C) 2012-2018 by marcel suter, marcel@marcelsuter.ch
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

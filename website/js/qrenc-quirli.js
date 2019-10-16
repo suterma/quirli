@@ -1,6 +1,6 @@
 /*! 
     quirli, replay with ease.
-    Copyright (C) 2012-2018 by marcel suter, marcel@codeministry.ch
+    Copyright (C) 2012-2018 by marcel suter, marcel@marcelsuter.ch
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -731,7 +731,7 @@ var qrcodedimension, qrc;
 function setupqr(){
     qrd = document.getElementById("qrdiv");
 
-    // change by marcel@codeministry.ch: the dimension of the QR code must
+    // change by marcel@marcelsuter.ch: the dimension of the QR code must
     // be a little  below screen height (including some
     // margin) and content container width to be fully visible at once in the
     // browser, but it should not be smaller than some minimal size to provide
@@ -766,7 +766,7 @@ function doqr() {
     qrc.lineWidth=1;
 
     var i,j;
-    // change by marcel@codeministry.ch: Using a square area of qrcodedimension
+    // change by marcel@marcelsuter.ch: Using a square area of qrcodedimension
     // for all cases. Changed px calculation to better use screen real estate.
     px = qrcodedimension;
     px /= width+7;
