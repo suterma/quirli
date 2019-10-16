@@ -6,7 +6,7 @@
 
 quirli is a free media player for replay and rehearsal. It's main feature is fast navigation to predefined cue points in the media.
 
-![A visual overview over how quirli works.](http://quir.li/img/HowItWorks.png "A visual overview over how quirli works.")
+![A visual overview over how quirli works.](https://github.com/suterma/quirli/raw/master/website/img/HowItWorks.png)
 
 ## Examples:
 
