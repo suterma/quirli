@@ -25,12 +25,9 @@ Supported media types are _mp3_, _wav_, _mp4_, _webm_, _ogv_, _ogg_ and _youtube
 ## Who can use it?
 quirli is primarily aimed at musicians, singers and choir conductors who want to rehearse with playback music. You can however use it to provide access to specific parts of any media file regardless of it's content. 
 
-## [Get started!](http://quir.li/player.html)
+## [Get started!](http://quirli.marcelsuter.ch/player.html)
 Or find out more on the [project website](http://quir.li).
 
-Deploy button for Microsoft Azure
-====================
-
-Use this button to automatically deploy this web app as an Azure App
-
+## Deploy on Azure
+Use this button to automatically deploy this web app as your own Azure App
 <a href="https://azuredeploy.net/" target="_blank"><img src="http://azuredeploy.net/deploybutton.png"/></a>
